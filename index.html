@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rivanshh Super App | Abhivansh Srivastav</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            outfit: ['Outfit', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              dark: '#09090d',
+              surface: '#13131d',
+              card: '#1b1b2a',
+              border: '#2c2c42'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2c2c42;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8b5cf6;
+    }
+    .glass {
+      background: rgba(22, 22, 34, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .glow-sm {
+      box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.35);
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-[#09090d] text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-purple-600 selection:text-white pb-28 md:pb-0 md:pl-20">
+
+  <!-- Mobile Top Branding / Header -->
+  <header class="sticky top-0 z-40 bg-[#0e0e17]/90 backdrop-blur-md border-b border-[#242438] px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-violet-600 via-indigo-600 to-fuchsia-500 flex items-center justify-center font-outfit font-extrabold text-white text-lg shadow-lg shadow-violet-700/30">
+        R
+      </div>
+      <div>
+        <h1 class="font-outfit font-bold tracking-tight text-white leading-none text-base">Rivanshh</h1>
+        <p class="text-[11px] text-violet-400 font-medium">All-In-One Super App</p>
+      </div>
+    </div>
+    
+    <!-- User Quick Switcher Button -->
+    <div class="relative">
+      <button onclick="toggleAccountModal()" class="flex items-center gap-2 bg-[#1b1b2a] hover:bg-[#25253b] px-3 py-1.5 rounded-full border border-[#2d2d44] transition-all text-xs font-medium">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="activeAccountDisplay" class="max-w-[90px] truncate">Abhivansh</span>
+        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar Navigation for Desktop -->
+  <aside class="hidden md:flex fixed left-0 top-0 bottom-0 w-20 flex-col items-center py-6 bg-[#0c0c14] border-r border-[#212134] z-50 justify-between">
+    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center font-outfit font-black text-xl text-white shadow-xl shadow-violet-600/30">
+      R
+    </div>
+    <div class="flex flex-col gap-4">
+      <button onclick="switchTab('music')" class="nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-violet-400 bg-[#1b1b2a]" data-tab="music" title="Music">
+        <i data-lucide="music" class="w-6 h-6"></i>
+      </button>
+      <button onclick="switchTab('tube')" class="nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-slate-400" data-tab="tube" title="Tube">
+        <i data-lucide="youtube" class="w-6 h-6"></i>
+      </button>
+      <button onclick="switchTab('joinus')" class="nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-slate-400" data-tab="joinus" title="JoinUs Chat">
+        <i data-lucide="message-square" class="w-6 h-6"></i>
+      </button>
+      <button onclick="switchTab('ai')" class="nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-slate-400" data-tab="ai" title="Rivanshh AI">
+        <i data-lucide="sparkles" class="w-6 h-6"></i>
+      </button>
+      <button onclick="switchTab('hub')" class="nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-slate-400" data-tab="hub" title="Social Hub">
+        <i data-lucide="globe" class="w-6 h-6"></i>
+      </button>
+      <button onclick="switchTab('pay')" class="nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-slate-400" data-tab="pay" title="Pay & Downloader">
+        <i data-lucide="arrow-down-to-line" class="w-6 h-6"></i>
+      </button>
+      <button onclick="switchTab('owner')" class="nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-slate-400" data-tab="owner" title="Owner Profile">
+        <i data-lucide="user-check" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <div class="w-8 h-8 rounded-full bg-violet-600/30 flex items-center justify-center text-xs font-bold text-violet-300">
+      AS
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 w-full max-w-5xl mx-auto p-4 md:p-6 overflow-x-hidden">
+
+    <!-- 1. TAB: RIVANSHH MUSIC (Feature 2) -->
+    <section id="tab-music" class="tab-view block space-y-5">
+      <!-- Search & Filters -->
+      <div class="flex items-center gap-3">
+        <div class="relative flex-1">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400"></i>
+          <input type="text" id="musicSearchInput" oninput="filterSongs()" placeholder="Search songs, artists, mood..." class="w-full bg-[#151522] border border-[#25253b] rounded-2xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-violet-500 text-white placeholder-slate-500">
+        </div>
+        <div class="relative">
+          <button onclick="toggleSleepDropdown()" class="flex items-center gap-2 bg-[#151522] border border-[#25253b] px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-violet-300 hover:border-violet-500 transition-all">
+            <i data-lucide="timer" class="w-4 h-4 text-violet-400"></i>
+            <span id="sleepTimerBadge">Sleep Timer</span>
+          </button>
+          <div id="sleepDropdown" class="hidden absolute right-0 mt-2 w-44 bg-[#171726] border border-[#2d2d48] rounded-xl shadow-2xl p-1 z-50">
+            <button onclick="setSleepTimer(15)" class="w-full text-left px-3 py-2 text-xs text-slate-300 hover:bg-[#232338] rounded-lg">15 Minutes</button>
+            <button onclick="setSleepTimer(30)" class="w-full text-left px-3 py-2 text-xs text-slate-300 hover:bg-[#232338] rounded-lg">30 Minutes</button>
+            <button onclick="setSleepTimer(60)" class="w-full text-left px-3 py-2 text-xs text-slate-300 hover:bg-[#232338] rounded-lg">60 Minutes</button>
+            <button onclick="cancelSleepTimer()" class="w-full text-left px-3 py-2 text-xs text-rose-400 hover:bg-[#232338] rounded-lg border-t border-[#292940]">Off / Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Player Banner -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-violet-950 via-[#19152b] to-[#12121e] border border-[#2e264a] p-5 md:p-6 glow-sm">
+        <div class="absolute -right-8 -top-8 w-44 h-44 bg-violet-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex flex-col md:flex-row items-center gap-6 z-10 relative">
+          <!-- Album Cover Disk -->
+          <div class="relative group">
+            <div id="albumDisk" class="w-32 h-32 md:w-36 md:h-36 rounded-2xl bg-gradient-to-tr from-violet-600 via-indigo-700 to-fuchsia-600 flex items-center justify-center shadow-xl shadow-black/60 overflow-hidden">
+              <i data-lucide="disc" class="w-16 h-16 text-white/80 animate-[spin_8s_linear_infinite]" id="spinIcon"></i>
+            </div>
+            <button onclick="toggleLikeCurrent()" class="absolute -top-2 -right-2 p-2 bg-[#1d1d2e] rounded-full border border-[#34344e] text-rose-500 shadow-md">
+              <i data-lucide="heart" id="currentLikedHeart" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Track Metadata & Audio Controls -->
+          <div class="flex-1 text-center md:text-left space-y-3 w-full">
+            <div>
+              <div class="flex items-center justify-center md:justify-start gap-2">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-violet-400 bg-violet-900/40 px-2 py-0.5 rounded-full border border-violet-700/50">Streaming Free</span>
+                <span class="text-[10px] text-emerald-400 font-semibold">• No Ads Background Ready</span>
+              </div>
+              <h2 id="currentSongTitle" class="text-xl md:text-2xl font-bold font-outfit text-white mt-1">Lo-Fi Midnight Beats</h2>
+              <p id="currentSongArtist" class="text-sm text-slate-400">Abhivansh Srivastav Original</p>
+            </div>
+
+            <!-- Seek Slider -->
+            <div class="space-y-1">
+              <input type="range" id="progressBar" min="0" max="100" value="0" oninput="seekSong(this.value)" class="w-full accent-violet-500 h-1.5 bg-[#2a2a40] rounded-lg cursor-pointer">
+              <div class="flex justify-between text-[11px] text-slate-400 font-mono">
+                <span id="currentTimeLabel">0:00</span>
+                <span id="durationLabel">0:00</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center justify-center md:justify-start gap-4 pt-1">
+              <button onclick="prevSong()" class="p-2.5 rounded-full hover:bg-white/10 text-slate-300 transition-all">
+                <i data-lucide="skip-back" class="w-5 h-5"></i>
+              </button>
+              <button onclick="togglePlayPause()" id="playPauseBtn" class="p-4 rounded-full bg-violet-600 hover:bg-violet-500 text-white shadow-lg shadow-violet-600/50 transition-all transform hover:scale-105 active:scale-95">
+                <i data-lucide="play" id="playIcon" class="w-6 h-6 fill-white"></i>
+              </button>
+              <button onclick="nextSong()" class="p-2.5 rounded-full hover:bg-white/10 text-slate-300 transition-all">
+                <i data-lucide="skip-forward" class="w-5 h-5"></i>
+              </button>
+              <button onclick="toggleLyrics()" class="text-xs flex items-center gap-1.5 bg-[#25253c] hover:bg-[#30304c] text-violet-300 px-3 py-1.5 rounded-xl border border-[#3b3b5c]">
+                <i data-lucide="align-left" class="w-3.5 h-3.5"></i>
+                <span>Lyrics</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Expandable Lyrics Box -->
+        <div id="lyricsDrawer" class="hidden mt-5 pt-4 border-t border-violet-900/40 text-center transition-all">
+          <p class="text-xs uppercase tracking-widest text-violet-400 font-semibold mb-2">Synchronized Lyrics</p>
+          <div id="lyricsText" class="text-sm font-medium text-slate-200 leading-relaxed font-outfit max-h-36 overflow-y-auto px-4 py-2 bg-black/30 rounded-xl whitespace-pre-line">
+            Midnight calm, mind stays clear...
+No distraction, vision near.
+Building dreams from day to night,
+Rivanshh vibe shining bright.
+          </div>
+        </div>
+      </div>
+
+      <!-- Playlist / All Tracks List -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="font-outfit font-bold text-lg text-white">Top Rivanshh Playlists</h3>
+          <span class="text-xs text-slate-400" id="playlistCount">3 Tracks Available</span>
+        </div>
+        <div id="songListContainer" class="space-y-2">
+          <!-- Rendered dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TAB: RIVANSHH TUBE & SHORTS (Feature 3) -->
+    <section id="tab-tube" class="tab-view hidden space-y-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="font-outfit font-bold text-xl text-white">Rivanshh Tube & Shorts</h2>
+          <p class="text-xs text-slate-400">Stream ad-free curated videos, coding tutorials & reels</p>
+        </div>
+        <span class="bg-red-500/20 text-red-400 text-[11px] px-2.5 py-1 rounded-full border border-red-500/30 font-semibold flex items-center gap-1">
+          <i data-lucide="play" class="w-3 h-3 fill-red-400"></i> Active Stream
+        </span>
+      </div>
+
+      <!-- Featured Tube Video Embed Player -->
+      <div class="bg-[#13131f] border border-[#232338] rounded-3xl overflow-hidden shadow-xl">
+        <div class="relative w-full aspect-video bg-black">
+          <iframe id="mainTubeIframe" class="w-full h-full" src="https://www.youtube.com/embed/jfKfPfyJRdk" title="Rivanshh Stream Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <h3 id="tubeVideoTitle" class="font-bold text-white text-base">Lofi Girl - Peaceful Coding & Study Beats Live</h3>
+            <p class="text-xs text-slate-400">Featured in Rivanshh Focus Stream</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="downloadActiveTube()" class="flex items-center gap-2 bg-violet-600 hover:bg-violet-500 px-3.5 py-2 rounded-xl text-xs font-semibold text-white">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Download MP4
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shorts Style Reel Feed -->
+      <div class="space-y-3">
+        <h3 class="font-outfit font-bold text-base text-white flex items-center gap-2">
+          <i data-lucide="flame" class="w-4 h-4 text-amber-400"></i> Rivanshh Shorts (Trending)
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div onclick="playShortVideo('dQw4w9WgXcQ', 'Never Give Up Motivation Reel')" class="cursor-pointer group relative bg-[#181827] rounded-2xl overflow-hidden border border-[#27273e] hover:border-violet-500/60 transition-all p-3 flex flex-col justify-between aspect-[9/14]">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">SHORTS</span>
+              <span class="text-[11px] text-white/90 flex items-center gap-1"><i data-lucide="heart" class="w-3 h-3 text-rose-500"></i> 142k</span>
+            </div>
+            <div class="relative z-10">
+              <p class="text-xs font-bold text-white line-clamp-2">Study Hard & Rule Your Future Motivation</p>
+              <p class="text-[10px] text-violet-300">@AbhivanshSrivastav</p>
+            </div>
+          </div>
+
+          <div onclick="playShortVideo('5qap5aO4i9A', 'Lofi Chill Study Mood')" class="cursor-pointer group relative bg-[#181827] rounded-2xl overflow-hidden border border-[#27273e] hover:border-violet-500/60 transition-all p-3 flex flex-col justify-between aspect-[9/14]">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">SHORTS</span>
+              <span class="text-[11px] text-white/90 flex items-center gap-1"><i data-lucide="heart" class="w-3 h-3 text-rose-500"></i> 89k</span>
+            </div>
+            <div class="relative z-10">
+              <p class="text-xs font-bold text-white line-clamp-2">Coding in Late Night Aesthetic</p>
+              <p class="text-[10px] text-violet-300">@whos.nthng</p>
+            </div>
+          </div>
+
+          <div onclick="playShortVideo('3JZ_D3ELwOQ', 'Physics Wallah Speed Review')" class="cursor-pointer group relative bg-[#181827] rounded-2xl overflow-hidden border border-[#27273e] hover:border-violet-500/60 transition-all p-3 flex flex-col justify-between aspect-[9/14]">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">SHORTS</span>
+              <span class="text-[11px] text-white/90 flex items-center gap-1"><i data-lucide="heart" class="w-3 h-3 text-rose-500"></i> 210k</span>
+            </div>
+            <div class="relative z-10">
+              <p class="text-xs font-bold text-white line-clamp-2">12th Revision Strategy Guide in 60s</p>
+              <p class="text-[10px] text-violet-300">@RivanshhEdits</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TAB: JOINUS (WhatsApp Styled Instant Messenger - Feature 5) -->
+    <section id="tab-joinus" class="tab-view hidden space-y-4">
+      <div class="bg-[#141420] border border-[#252538] rounded-3xl p-4 flex items-center justify-between">
+        <div>
+          <h2 class="font-outfit font-bold text-lg text-white">JoinUs Messenger</h2>
+          <p class="text-xs text-slate-400">Assigned Virtual Number: <span class="text-emerald-400 font-mono font-semibold">+91-9870-RIVANSHH</span></p>
+        </div>
+        <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 text-[11px] font-bold rounded-full border border-emerald-500/30 flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Live Free
+        </span>
+      </div>
+
+      <!-- Status Stories Strip -->
+      <div class="flex items-center gap-3 overflow-x-auto pb-2 hide-scrollbar">
+        <div onclick="openStory('My Status', 'Studying Class 12 batches on Rivanshh App today!')" class="flex flex-col items-center gap-1 cursor-pointer shrink-0">
+          <div class="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-violet-500 to-indigo-500 relative">
+            <div class="w-full h-full bg-[#1b1b2a] rounded-full flex items-center justify-center font-bold text-xs text-white">
+              You
+            </div>
+            <span class="absolute bottom-0 right-0 w-4 h-4 bg-violet-600 rounded-full flex items-center justify-center text-white text-[10px] font-black">+</span>
+          </div>
+          <span class="text-[11px] text-slate-300">My Status</span>
+        </div>
+
+        <div onclick="openStory('Abhivansh', 'Rivanshh App v1.0 is now live on web!')" class="flex flex-col items-center gap-1 cursor-pointer shrink-0">
+          <div class="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-pink-500 via-rose-500 to-amber-500">
+            <div class="w-full h-full bg-[#1b1b2a] rounded-full flex items-center justify-center font-bold text-xs text-rose-300">
+              AS
+            </div>
+          </div>
+          <span class="text-[11px] text-slate-300">Abhivansh</span>
+        </div>
+
+        <div onclick="openStory('PW Study Circle', 'New Physics batch test uploaded. Attempt now.')" class="flex flex-col items-center gap-1 cursor-pointer shrink-0">
+          <div class="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-emerald-500 to-teal-500">
+            <div class="w-full h-full bg-[#1b1b2a] rounded-full flex items-center justify-center font-bold text-xs text-emerald-300">
+              PW
+            </div>
+          </div>
+          <span class="text-[11px] text-slate-300">PW Study</span>
+        </div>
+      </div>
+
+      <!-- Chat Window Mockup -->
+      <div class="bg-[#12121d] border border-[#222235] rounded-3xl flex flex-col h-[420px] overflow-hidden shadow-2xl">
+        <!-- Chat Header -->
+        <div class="p-3.5 bg-[#171726] border-b border-[#28283f] flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center font-bold text-xs text-white">
+              AS
+            </div>
+            <div>
+              <p class="font-bold text-sm text-white">Abhivansh Srivastav (Admin)</p>
+              <p class="text-[10px] text-emerald-400">Online | Virtual ID: #RV-1082</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-slate-400">
+            <button class="p-2 hover:bg-[#24243a] rounded-lg"><i data-lucide="phone" class="w-4 h-4"></i></button>
+            <button class="p-2 hover:bg-[#24243a] rounded-lg"><i data-lucide="video" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+
+        <!-- Chat Messages Box -->
+        <div id="joinusChatBox" class="flex-1 p-4 overflow-y-auto space-y-3 font-sans text-xs">
+          <div class="flex justify-center">
+            <span class="bg-[#1b1b2c] text-slate-400 text-[10px] px-3 py-1 rounded-full border border-[#2b2b42]">End-to-end encrypted with Rivanshh Network</span>
+          </div>
+          <div class="flex items-end gap-2">
+            <div class="max-w-[75%] bg-[#1f1f30] text-slate-200 p-3 rounded-2xl rounded-bl-none border border-[#2b2b42]">
+              Hey! Welcome to Rivanshh JoinUs Messenger. Har user ko custom ID aur number free assign hota hai.
+              <span class="block text-[9px] text-slate-400 text-right mt-1">11:15 AM</span>
+            </div>
+          </div>
+          <div class="flex items-end justify-end gap-2">
+            <div class="max-w-[75%] bg-violet-600 text-white p-3 rounded-2xl rounded-br-none shadow-md">
+              Awesome! Spotify, YouTube, aur PW batch sab ek app me chal raha hai!
+              <span class="block text-[9px] text-violet-200 text-right mt-1">11:16 AM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message Input -->
+        <div class="p-3 bg-[#171726] border-t border-[#25253b] flex items-center gap-2">
+          <input type="text" id="chatMessageInput" placeholder="Message Abhivansh or anyone in JoinUs..." class="flex-1 bg-[#0f0f18] border border-[#27273e] rounded-xl px-3.5 py-2 text-xs focus:outline-none focus:border-violet-500 text-white" onkeydown="if(event.key==='Enter') sendChatMessage()">
+          <button onclick="sendChatMessage()" class="p-2 bg-violet-600 hover:bg-violet-500 rounded-xl text-white transition-all">
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TAB: RIVANSHH AI (Feature 11) -->
+    <section id="tab-ai" class="tab-view hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="font-outfit font-bold text-xl text-white flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-5 h-5 text-violet-400"></i> Rivanshh AI Assistant
+          </h2>
+          <p class="text-xs text-slate-400">Ask any doubt, photo generation prompts & study summaries</p>
+        </div>
+        <button onclick="clearAIChat()" class="text-[11px] text-slate-400 hover:text-rose-400 flex items-center gap-1">
+          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Clear Chat
+        </button>
+      </div>
+
+      <!-- Quick Prompt Pills -->
+      <div class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
+        <button onclick="useQuickPrompt('Give me 5 viral Instagram photo editing prompts with cinematic mood')" class="shrink-0 bg-[#191928] hover:bg-[#25253b] text-slate-300 text-xs px-3 py-1.5 rounded-full border border-[#2c2c44] transition-all">
+          📸 Photo Editing Prompts
+        </button>
+        <button onclick="useQuickPrompt('Summarize Class 12 Physics Current Electricity key formulas')" class="shrink-0 bg-[#191928] hover:bg-[#25253b] text-slate-300 text-xs px-3 py-1.5 rounded-full border border-[#2c2c44] transition-all">
+          ⚡ 12th Physics Formulas
+        </button>
+        <button onclick="useQuickPrompt('Give me lo-fi aesthetic wallpaper ideas for Instagram')" class="shrink-0 bg-[#191928] hover:bg-[#25253b] text-slate-300 text-xs px-3 py-1.5 rounded-full border border-[#2c2c44] transition-all">
+          🎨 Wallpaper Ideas
+        </button>
+      </div>
+
+      <!-- Chat Container -->
+      <div class="bg-[#12121d] border border-[#232338] rounded-3xl flex flex-col h-[460px] overflow-hidden shadow-2xl">
+        <div id="aiChatBox" class="flex-1 p-4 overflow-y-auto space-y-3 font-sans text-xs">
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center font-bold text-white text-[10px] shrink-0">
+              AI
+            </div>
+            <div class="max-w-[85%] bg-[#1a1a2b] text-slate-200 p-3 rounded-2xl rounded-tl-none border border-[#292942]">
+              Namaste! Mai Rivanshh AI hoon. Aapke studies (PW Batches), Instagram prompt ideas, ya codes se related sawal puchiye!
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Box -->
+        <div class="p-3 bg-[#161625] border-t border-[#232338] flex items-center gap-2">
+          <input type="text" id="aiInput" placeholder="Ask Rivanshh AI anything (e.g. solve physics or generate prompt)..." class="flex-1 bg-[#0f0f18] border border-[#2a2a44] rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-violet-500 text-white" onkeydown="if(event.key==='Enter') triggerAISend()">
+          <button onclick="triggerAISend()" class="px-4 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 rounded-xl text-white font-medium text-xs flex items-center gap-1.5 transition-all shadow-md">
+            <span>Send</span>
+            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TAB: SOCIAL & STUDY HUB (Features 4, 8, 9, 10: Faah, Waahchat, Khelbook, Study) -->
+    <section id="tab-hub" class="tab-view hidden space-y-4">
+      <div>
+        <h2 class="font-outfit font-bold text-xl text-white">Social & Study Hub</h2>
+        <p class="text-xs text-slate-400">Direct instant portals for Faah (Insta), Waahchat (Snap), Khelbook & Study Batches</p>
+      </div>
+
+      <!-- Hub Selector Buttons -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <button onclick="loadHubFrame('instagram')" class="hub-pill p-3 rounded-2xl bg-[#171726] border border-[#282840] hover:border-pink-500 text-left transition-all active:scale-95" id="hub-insta-btn">
+          <div class="flex items-center gap-2 text-pink-400 font-bold text-sm mb-1">
+            <i data-lucide="instagram" class="w-4 h-4"></i> Faah (Insta)
+          </div>
+          <p class="text-[10px] text-slate-400">Direct login container</p>
+        </button>
+
+        <button onclick="loadHubFrame('snapchat')" class="hub-pill p-3 rounded-2xl bg-[#171726] border border-[#282840] hover:border-amber-400 text-left transition-all active:scale-95">
+          <div class="flex items-center gap-2 text-amber-400 font-bold text-sm mb-1">
+            <i data-lucide="ghost" class="w-4 h-4"></i> Waahchat
+          </div>
+          <p class="text-[10px] text-slate-400">Snap web environment</p>
+        </button>
+
+        <button onclick="loadHubFrame('facebook')" class="hub-pill p-3 rounded-2xl bg-[#171726] border border-[#282840] hover:border-blue-500 text-left transition-all active:scale-95">
+          <div class="flex items-center gap-2 text-blue-400 font-bold text-sm mb-1">
+            <i data-lucide="facebook" class="w-4 h-4"></i> Khelbook
+          </div>
+          <p class="text-[10px] text-slate-400">Facebook mobile portal</p>
+        </button>
+
+        <button onclick="loadHubFrame('study')" class="hub-pill p-3 rounded-2xl bg-[#171726] border border-[#282840] hover:border-emerald-400 text-left transition-all active:scale-95">
+          <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm mb-1">
+            <i data-lucide="book-open" class="w-4 h-4"></i> Study with Abhivansh
+          </div>
+          <p class="text-[10px] text-slate-400">Free batch access player</p>
+        </button>
+      </div>
+
+      <!-- Interactive Web Container Frame -->
+      <div class="bg-[#12121d] border border-[#232338] rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[520px]">
+        <div class="p-3 bg-[#181827] border-b border-[#28283f] flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+            <span id="hubFrameTitle" class="text-xs text-slate-300 font-mono ml-2">https://instagram.com</span>
+          </div>
+          <a id="externalHubLink" href="https://instagram.com" target="_blank" class="text-[11px] text-violet-400 flex items-center gap-1 hover:underline">
+            Open App <i data-lucide="external-link" class="w-3 h-3"></i>
+          </a>
+        </div>
+
+        <div id="hubFrameContent" class="flex-1 bg-black/40 flex flex-col items-center justify-center p-6 text-center">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-pink-600 via-rose-500 to-amber-500 flex items-center justify-center text-white mb-4 shadow-lg shadow-pink-500/30">
+            <i data-lucide="instagram" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-outfit">Faah - Instagram Portal</h3>
+          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4">Aap bina app download kiye yahan seedhe Instagram web par apna id login karke reels dekh aur chat kar sakte hain.</p>
+          <a href="https://www.instagram.com" target="_blank" class="bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs font-semibold px-5 py-2.5 rounded-xl shadow-lg">
+            Launch Instagram Secure Web
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. TAB: RIVANSHH PAY & MEDIA DOWNLOADER (Features 6 & 7) -->
+    <section id="tab-pay" class="tab-view hidden space-y-6">
+      <!-- Feature 7: Link Downloader -->
+      <div class="bg-[#141421] border border-[#27273e] rounded-3xl p-5 shadow-xl space-y-4">
+        <div>
+          <span class="text-[10px] uppercase font-bold text-violet-400 bg-violet-950/60 px-2.5 py-0.5 rounded-full border border-violet-800/40">Feature 7</span>
+          <h2 class="text-lg font-outfit font-bold text-white mt-1">Rivanshh Link Downloader (MP3 & MP4)</h2>
+          <p class="text-xs text-slate-400">Kisi bhi YouTube, Insta ya audio link ko paste karke direct offline download karein</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-2">
+          <div class="relative flex-1">
+            <i data-lucide="link" class="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400"></i>
+            <input type="url" id="mediaUrlInput" placeholder="Paste link here (e.g. https://youtu.be/...)" class="w-full bg-[#0d0d15] border border-[#282840] rounded-xl pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500">
+          </div>
+          <div class="flex gap-2">
+            <button onclick="simulateDownload('MP3 Audio')" class="flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-violet-600 hover:bg-violet-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all">
+              <i data-lucide="music-2" class="w-3.5 h-3.5"></i>
+              <span>Get MP3</span>
+            </button>
+            <button onclick="simulateDownload('MP4 Video')" class="flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all">
+              <i data-lucide="video" class="w-3.5 h-3.5"></i>
+              <span>Get MP4</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="downloadStatusBox" class="hidden p-3 bg-violet-950/30 border border-violet-800/40 rounded-xl text-xs flex items-center justify-between text-violet-200">
+          <span id="downloadStatusText">Preparing download...</span>
+          <a id="downloadTriggerBtn" href="#" class="font-bold underline text-violet-300">Save File</a>
+        </div>
+      </div>
+
+      <!-- Feature 6: Rivanshh Pay -->
+      <div class="bg-gradient-to-br from-[#181827] via-[#141421] to-[#12121e] border border-[#292942] rounded-3xl p-5 shadow-xl space-y-4">
+        <div>
+          <span class="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-800/40">Feature 6</span>
+          <h2 class="text-lg font-outfit font-bold text-white mt-1">Rivanshh Pay (Instant UPI)</h2>
+          <p class="text-xs text-slate-400">Fast UPI transfers, QR pay mockup & merchant balance</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Balance Card -->
+          <div class="bg-gradient-to-tr from-violet-900/60 via-indigo-900/40 to-[#19192b] p-4 rounded-2xl border border-violet-700/40 space-y-3">
+            <span class="text-xs text-slate-300 font-medium">Rivanshh Wallet Balance</span>
+            <div class="text-2xl font-bold font-outfit text-white">₹ 4,850.<span class="text-sm text-slate-400">00</span></div>
+            <div class="flex items-center gap-2 pt-2">
+              <button onclick="alertModal('UPI Payment', 'Enter UPI ID (e.g. abhivan@okaxis) to transfer.')" class="flex-1 py-2 bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold rounded-xl text-center">
+                Send Money
+              </button>
+              <button onclick="alertModal('Add Cash', 'Payment gateway simulated. Added ₹500!')" class="flex-1 py-2 bg-[#25253c] hover:bg-[#30304a] text-slate-200 text-xs font-bold rounded-xl text-center border border-[#373752]">
+                + Add Cash
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick QR Box -->
+          <div class="bg-[#101019] p-4 rounded-2xl border border-[#242438] flex items-center gap-4">
+            <div class="w-20 h-20 bg-white p-1 rounded-xl flex items-center justify-center shrink-0">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=abhivansh@rivanshh" alt="Rivanshh UPI QR" class="w-full h-full object-contain">
+            </div>
+            <div class="text-xs space-y-1">
+              <p class="font-bold text-white">Scan to Pay Abhivansh</p>
+              <p class="text-[11px] text-slate-400 font-mono">UPI ID: rivanshh@upi</p>
+              <span class="inline-block text-[10px] text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/40">Zero Fee Guarantee</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. TAB: APP OWNER (Abhivansh Srivastav Bio - Feature 1) -->
+    <section id="tab-owner" class="tab-view hidden space-y-5">
+      <!-- Profile Card -->
+      <div class="bg-gradient-to-b from-[#1c1a2d] to-[#12121c] border border-[#2f2b4a] rounded-3xl p-6 text-center relative overflow-hidden shadow-2xl">
+        <div class="absolute -top-12 -left-12 w-48 h-48 bg-violet-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col items-center">
+          <!-- Profile Avatar with Ring -->
+          <div class="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-violet-500 via-indigo-500 to-fuchsia-500 shadow-xl shadow-violet-700/30 mb-3">
+            <div class="w-full h-full rounded-full bg-[#161624] flex items-center justify-center font-outfit font-extrabold text-2xl text-white">
+              AS
+            </div>
+          </div>
+
+          <h2 class="font-outfit font-bold text-2xl text-white">Abhivansh Srivastav</h2>
+          <p class="text-xs text-violet-400 font-medium">Founder & Solo Developer of Rivanshh App</p>
+
+          <p class="text-xs text-slate-300 max-w-md mt-3 leading-relaxed">
+            "Music, video streaming, private encrypted messenger aur AI ko ek single platform par bina kisi ads aur bina ruke chalane ka dream project."
+          </p>
+
+          <!-- Social Action Badges -->
+          <div class="flex flex-wrap items-center justify-center gap-2.5 mt-5">
+            <a href="https://instagram.com/whos.nthng" target="_blank" class="flex items-center gap-2 bg-[#221f35] hover:bg-[#2d2946] border border-[#3b3558] px-3.5 py-2 rounded-xl text-xs font-semibold text-pink-300 transition-all">
+              <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
+              <span>@whos.nthng</span>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="flex items-center gap-2 bg-[#2a1d22] hover:bg-[#38252d] border border-[#4d2d38] px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-300 transition-all">
+              <i data-lucide="youtube" class="w-3.5 h-3.5"></i>
+              <span>YouTube Channel</span>
+            </a>
+            <a href="mailto:abhivansh@example.com" class="flex items-center gap-2 bg-[#1b2532] hover:bg-[#233143] border border-[#2b415a] px-3.5 py-2 rounded-xl text-xs font-semibold text-sky-300 transition-all">
+              <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+              <span>Official Gmail</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details List -->
+      <div class="space-y-2.5">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Configured Credentials & Accounts</h3>
+
+        <div class="bg-[#141420] border border-[#252538] p-3.5 rounded-2xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 bg-violet-600/20 text-violet-400 rounded-xl">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white">Developer Authority</p>
+              <p class="text-[11px] text-slate-400">Abhivansh Srivastav (Full Access)</p>
+            </div>
+          </div>
+          <span class="text-[11px] text-emerald-400 font-mono">VERIFIED</span>
+        </div>
+
+        <div class="bg-[#141420] border border-[#252538] p-3.5 rounded-2xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 bg-blue-600/20 text-blue-400 rounded-xl">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white">Multi-Gmail Switch Status</p>
+              <p class="text-[11px] text-slate-400">4 Google Accounts Linked</p>
+            </div>
+          </div>
+          <button onclick="toggleAccountModal()" class="text-xs text-violet-400 font-bold hover:underline">
+            Manage
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sticky Bottom Navigation for Mobile -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0e0e17]/95 backdrop-blur-xl border-t border-[#25253a] px-2 py-2 flex items-center justify-around">
+    <button onclick="switchTab('music')" class="mobile-nav-btn flex flex-col items-center gap-1 p-1.5 text-violet-400" data-tab="music">
+      <i data-lucide="music" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Music</span>
+    </button>
+    <button onclick="switchTab('tube')" class="mobile-nav-btn flex flex-col items-center gap-1 p-1.5 text-slate-400" data-tab="tube">
+      <i data-lucide="youtube" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Tube</span>
+    </button>
+    <button onclick="switchTab('joinus')" class="mobile-nav-btn flex flex-col items-center gap-1 p-1.5 text-slate-400" data-tab="joinus">
+      <i data-lucide="message-square" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">JoinUs</span>
+    </button>
+    <button onclick="switchTab('ai')" class="mobile-nav-btn flex flex-col items-center gap-1 p-1.5 text-slate-400" data-tab="ai">
+      <i data-lucide="sparkles" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">AI</span>
+    </button>
+    <button onclick="switchTab('hub')" class="mobile-nav-btn flex flex-col items-center gap-1 p-1.5 text-slate-400" data-tab="hub">
+      <i data-lucide="globe" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Hub</span>
+    </button>
+    <button onclick="switchTab('pay')" class="mobile-nav-btn flex flex-col items-center gap-1 p-1.5 text-slate-400" data-tab="pay">
+      <i data-lucide="download" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Pay</span>
+    </button>
+    <button onclick="switchTab('owner')" class="mobile-nav-btn flex flex-col items-center gap-1 p-1.5 text-slate-400" data-tab="owner">
+      <i data-lucide="user" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Owner</span>
+    </button>
+  </nav>
+
+  <!-- Modal: Multi-Account Switcher (Feature 1) -->
+  <div id="accountModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#171726] border border-[#2f2f47] rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 class="font-outfit font-bold text-white text-base">Switch Google Account</h3>
+        <button onclick="toggleAccountModal()" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <p class="text-xs text-slate-400">Aapke notes ke mutabiq 4-5 Gmail switch karne ka direct option:</p>
+
+      <div class="space-y-2">
+        <button onclick="chooseAccount('Abhivansh Primary', 'abhivansh.srivastav@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl bg-[#202033] hover:bg-[#282840] border border-violet-500/40 text-left">
+          <div class="w-8 h-8 rounded-full bg-violet-600 text-white font-bold flex items-center justify-center text-xs">AS</div>
+          <div class="truncate">
+            <p class="text-xs font-bold text-white">Abhivansh Srivastav (Main)</p>
+            <p class="text-[10px] text-slate-400 truncate">abhivansh.srivastav@gmail.com</p>
+          </div>
+        </button>
+        <button onclick="chooseAccount('Rivanshh Business', 'contact.rivanshh@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl bg-[#191928] hover:bg-[#232338] border border-[#2b2b42] text-left">
+          <div class="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-xs">RB</div>
+          <div class="truncate">
+            <p class="text-xs font-bold text-white">Rivanshh Official</p>
+            <p class="text-[10px] text-slate-400 truncate">contact.rivanshh@gmail.com</p>
+          </div>
+        </button>
+        <button onclick="chooseAccount('Study Account', 'study.pw.abhivansh@gmail.com')" class="w-full flex items-center gap-3 p-3 rounded-2xl bg-[#191928] hover:bg-[#232338] border border-[#2b2b42] text-left">
+          <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">PW</div>
+          <div class="truncate">
+            <p class="text-xs font-bold text-white">Study with PW</p>
+            <p class="text-[10px] text-slate-400 truncate">study.pw.abhivansh@gmail.com</p>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Story Viewer -->
+  <div id="storyModal" class="hidden fixed inset-0 z-50 bg-black/95 flex flex-col justify-between p-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold">R</div>
+        <span id="storyAuthor" class="text-sm font-bold text-white">Status</span>
+      </div>
+      <button onclick="closeStory()" class="text-slate-400 hover:text-white p-2">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <div class="my-auto text-center px-4">
+      <p id="storyContentText" class="text-xl md:text-2xl font-bold font-outfit text-white leading-relaxed">Story status details here</p>
+    </div>
+    <div class="w-full bg-white/20 h-1 rounded-full overflow-hidden">
+      <div class="bg-violet-500 h-full w-full animate-[pulse_3s_infinite]"></div>
+    </div>
+  </div>
+
+  <!-- Modal: Generic Alert Notification -->
+  <div id="customAlertModal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+    <div class="bg-[#171726] border border-[#2d2d44] rounded-2xl p-5 max-w-xs w-full text-center space-y-3 shadow-2xl">
+      <h4 id="customAlertTitle" class="font-bold text-white text-sm">Notification</h4>
+      <p id="customAlertMessage" class="text-xs text-slate-300">Message description</p>
+      <button onclick="document.getElementById('customAlertModal').classList.add('hidden')" class="w-full py-2 bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold rounded-xl">
+        OK
+      </button>
+    </div>
+  </div>
+
+  <!-- Hidden HTML5 Audio Element for Free Streaming -->
+  <audio id="audioEngine" preload="metadata"></audio>
+
+  <!-- Application Logic Engine -->
+  <script>
+    // --- 1. SONGS REPOSITORY (Lo-Fi Royalty-Free Working Tracks) ---
+    const playlist = [
+      {
+        id: 1,
+        title: "Lo-Fi Midnight Beats",
+        artist: "Abhivansh Srivastav",
+        duration: "2:45",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        lyrics: "Midnight silence, neon light,\nCoding through the starry night.\nBuilding dreams with rhythm fast,\nEvery second made to last."
+      },
+      {
+        id: 2,
+        title: "Peaceful Chillwave Focus",
+        artist: "Rivanshh Studio",
+        duration: "3:12",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        lyrics: "Breathe in, let distractions go,\nSteady waves and gentle flow.\nNotes and code combine in rhyme,\nTurning ambition into prime."
+      },
+      {
+        id: 3,
+        title: "Deep Soul Concentration",
+        artist: "Abhivansh Original",
+        duration: "3:30",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        lyrics: "Target locked, the mind is still,\nUnstoppable with burning will.\nMusic keeps the pulse alive,\nRivanshh app will always strive."
+      }
+    ];
+
+    let currentSongIndex = 0;
+    let isPlaying = false;
+    let likedSongs = new Set([1]);
+    let sleepTimerId = null;
+
+    const audio = document.getElementById('audioEngine');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playIcon = document.getElementById('playIcon');
+    const spinIcon = document.getElementById('spinIcon');
+    const progressBar = document.getElementById('progressBar');
+    const currentTimeLabel = document.getElementById('currentTimeLabel');
+    const durationLabel = document.getElementById('durationLabel');
+    const currentSongTitle = document.getElementById('currentSongTitle');
+    const currentSongArtist = document.getElementById('currentSongArtist');
+    const currentLikedHeart = document.getElementById('currentLikedHeart');
+    const lyricsText = document.getElementById('lyricsText');
+
+    // Load initial song
+    function loadSong(index) {
+      currentSongIndex = index;
+      const song = playlist[index];
+      audio.src = song.src;
+      currentSongTitle.innerText = song.title;
+      currentSongArtist.innerText = song.artist;
+      lyricsText.innerText = song.lyrics;
+      updateLikeIcon();
+      renderSongList();
+    }
+
+    function togglePlayPause() {
+      if (!audio.src) loadSong(0);
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        playIcon.setAttribute('data-lucide', 'play');
+        spinIcon.classList.remove('animate-[spin_4s_linear_infinite]');
+      } else {
+        audio.play().catch(e => console.log('Audio autoplay prevented'));
+        isPlaying = true;
+        playIcon.setAttribute('data-lucide', 'pause');
+        spinIcon.classList.add('animate-[spin_4s_linear_infinite]');
+      }
+      lucide.createIcons();
+    }
+
+    function nextSong() {
+      currentSongIndex = (currentSongIndex + 1) % playlist.length;
+      loadSong(currentSongIndex);
+      if (isPlaying) audio.play();
+    }
+
+    function prevSong() {
+      currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+      loadSong(currentSongIndex);
+      if (isPlaying) audio.play();
+    }
+
+    // Auto-Next song Spotify style
+    audio.addEventListener('ended', () => {
+      nextSong();
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressBar.value = progress;
+        currentTimeLabel.innerText = formatTime(audio.currentTime);
+        durationLabel.innerText = formatTime(audio.duration);
+      }
+    });
+
+    function seekSong(value) {
+      if (audio.duration) {
+        audio.currentTime = (value / 100) * audio.duration;
+      }
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function toggleLikeCurrent() {
+      const currentId = playlist[currentSongIndex].id;
+      if (likedSongs.has(currentId)) {
+        likedSongs.delete(currentId);
+      } else {
+        likedSongs.add(currentId);
+      }
+      updateLikeIcon();
+      renderSongList();
+    }
+
+    function updateLikeIcon() {
+      const currentId = playlist[currentSongIndex].id;
+      if (likedSongs.has(currentId)) {
+        currentLikedHeart.classList.add('fill-rose-500', 'text-rose-500');
+      } else {
+        currentLikedHeart.classList.remove('fill-rose-500', 'text-rose-500');
+      }
+    }
+
+    function toggleLyrics() {
+      const drawer = document.getElementById('lyricsDrawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    // Render Song Playlist
+    function renderSongList(filteredList = playlist) {
+      const container = document.getElementById('songListContainer');
+      container.innerHTML = '';
+      filteredList.forEach((song, idx) => {
+        const isCurrent = playlist[currentSongIndex].id === song.id;
+        const isLiked = likedSongs.has(song.id);
+        const div = document.createElement('div');
+        div.className = `flex items-center justify-between p-3 rounded-2xl border transition-all cursor-pointer ${
+          isCurrent ? 'bg-violet-950/40 border-violet-600/60' : 'bg-[#141420] border-[#222234] hover:bg-[#1a1a29]'
+        }`;
+        div.innerHTML = `
+          <div class="flex items-center gap-3" onclick="loadSong(${playlist.indexOf(song)}); if(!isPlaying) togglePlayPause();">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xs">
+              ${isCurrent && isPlaying ? '<i data-lucide="volume-2" class="w-4 h-4 animate-pulse"></i>' : song.id}
+            </div>
+            <div>
+              <p class="text-xs font-bold ${isCurrent ? 'text-violet-400' : 'text-white'}">${song.title}</p>
+              <p class="text-[10px] text-slate-400">${song.artist}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-[10px] text-slate-500 font-mono">${song.duration}</span>
+            <button onclick="event.stopPropagation(); toggleLikeSong(${song.id})" class="text-slate-400 hover:text-rose-500">
+              <i data-lucide="heart" class="w-4 h-4 ${isLiked ? 'fill-rose-500 text-rose-500' : ''}"></i>
+            </button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+      document.getElementById('playlistCount').innerText = `${filteredList.length} Tracks Available`;
+      lucide.createIcons();
+    }
+
+    function toggleLikeSong(id) {
+      if (likedSongs.has(id)) likedSongs.delete(id);
+      else likedSongs.add(id);
+      updateLikeIcon();
+      renderSongList();
+    }
+
+    function filterSongs() {
+      const q = document.getElementById('musicSearchInput').value.toLowerCase();
+      const filtered = playlist.filter(s => s.title.toLowerCase().includes(q) || s.artist.toLowerCase().includes(q));
+      renderSongList(filtered);
+    }
+
+    // --- 2. SLEEP TIMER (Feature 2) ---
+    function toggleSleepDropdown() {
+      document.getElementById('sleepDropdown').classList.toggle('hidden');
+    }
+
+    function setSleepTimer(minutes) {
+      if (sleepTimerId) clearTimeout(sleepTimerId);
+      document.getElementById('sleepDropdown').classList.add('hidden');
+      document.getElementById('sleepTimerBadge').innerText = `${minutes}m Timer`;
+      alertModal('Sleep Timer Activated', `Music will automatically turn off in ${minutes} minutes. Sleep peacefully.`);
+
+      sleepTimerId = setTimeout(() => {
+        if (isPlaying) togglePlayPause();
+        document.getElementById('sleepTimerBadge').innerText = 'Sleep Timer';
+        alertModal('Sleep Timer Ended', 'Music automatically turned off.');
+      }, minutes * 60 * 1000);
+    }
+
+    function cancelSleepTimer() {
+      if (sleepTimerId) clearTimeout(sleepTimerId);
+      document.getElementById('sleepDropdown').classList.add('hidden');
+      document.getElementById('sleepTimerBadge').innerText = 'Sleep Timer';
+      alertModal('Timer Cancelled', 'Sleep timer turned off.');
+    }
+
+    // --- 3. NAVIGATION TAB SWITCHER ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      const activeTab = document.getElementById(`tab-${tabId}`);
+      if (activeTab) activeTab.classList.remove('hidden');
+
+      // Update Desktop Nav styles
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.className = 'nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-violet-400 bg-[#1b1b2a]';
+        } else {
+          btn.className = 'nav-btn p-3 rounded-2xl hover:bg-[#1b1b2a] text-slate-400';
+        }
+      });
+
+      // Update Mobile Nav styles
+      document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('text-violet-400');
+          btn.classList.remove('text-slate-400');
+        } else {
+          btn.classList.remove('text-violet-400');
+          btn.classList.add('text-slate-400');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    // --- 4. TUBE & SHORTS PLAYER (Feature 3) ---
+    function playShortVideo(videoId, title) {
+      const iframe = document.getElementById('mainTubeIframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      document.getElementById('tubeVideoTitle').innerText = title;
+      alertModal('Loading Video', `Playing: ${title}`);
+    }
+
+    function downloadActiveTube() {
+      simulateDownload('Current YouTube Video MP4');
+    }
+
+    // --- 5. JOINUS CHAT SYSTEM (Feature 5) ---
+    function sendChatMessage() {
+      const input = document.getElementById('chatMessageInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById('joinusChatBox');
+      const userMsg = document.createElement('div');
+      userMsg.className = 'flex items-end justify-end gap-2';
+      userMsg.innerHTML = `
+        <div class="max-w-[75%] bg-violet-600 text-white p-3 rounded-2xl rounded-br-none shadow-md">
+          ${text}
+          <span class="block text-[9px] text-violet-200 text-right mt-1">Just now</span>
+        </div>
+      `;
+      chatBox.appendChild(userMsg);
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Automated Mock Response
+      setTimeout(() => {
+        const reply = document.createElement('div');
+        reply.className = 'flex items-end gap-2';
+        reply.innerHTML = `
+          <div class="max-w-[75%] bg-[#1f1f30] text-slate-200 p-3 rounded-2xl rounded-bl-none border border-[#2b2b42]">
+            Got your message in JoinUs! Status and updates shared instantly on your network.
+            <span class="block text-[9px] text-slate-400 text-right mt-1">Just now</span>
+          </div>
+        `;
+        chatBox.appendChild(reply);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 1000);
+    }
+
+    function openStory(author, text) {
+      document.getElementById('storyAuthor').innerText = author;
+      document.getElementById('storyContentText').innerText = `"${text}"`;
+      document.getElementById('storyModal').classList.remove('hidden');
+    }
+
+    function closeStory() {
+      document.getElementById('storyModal').classList.add('hidden');
+    }
+
+    // --- 6. RIVANSHH AI (Feature 11) ---
+    function useQuickPrompt(text) {
+      document.getElementById('aiInput').value = text;
+      triggerAISend();
+    }
+
+    function triggerAISend() {
+      const input = document.getElementById('aiInput');
+      const prompt = input.value.trim();
+      if (!prompt) return;
+
+      const chat = document.getElementById('aiChatBox');
+      const userBubble = document.createElement('div');
+      userBubble.className = 'flex justify-end';
+      userBubble.innerHTML = `
+        <div class="max-w-[85%] bg-gradient-to-r from-violet-600 to-indigo-600 text-white p-3 rounded-2xl rounded-tr-none shadow-md">
+          ${prompt}
+        </div>
+      `;
+      chat.appendChild(userBubble);
+      input.value = '';
+      chat.scrollTop = chat.scrollHeight;
+
+      // AI Response generator
+      setTimeout(() => {
+        let response = `Shandaar Sawal! Rivanshh AI ne aapke prompt "${prompt}" ko analyse kiya hai:\n\n`;
+        if (prompt.toLowerCase().includes('prompt') || prompt.toLowerCase().includes('photo')) {
+          response += `1. Ultra-detailed 8K cyberpunk neon portrait, soft purple backlight, Sony A7IV lens, film grain.\n2. Aesthetic lo-fi anime student on desk, golden hour window rays, cinematic tones.`;
+        } else if (prompt.toLowerCase().includes('physics') || prompt.toLowerCase().includes('12')) {
+          response += `Current Electricity: V = IR (Ohm's Law), Power P = VI = I²R, Kirchhoff's Junction & Loop Rules. Important for CBSE boards!`;
+        } else {
+          response += `Rivanshh AI is running smoothly on your device with 100% precision. Aap chahein toh aur sawal pooch sakte hain!`;
+        }
+
+        const aiBubble = document.createElement('div');
+        aiBubble.className = 'flex items-start gap-2.5';
+        aiBubble.innerHTML = `
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center font-bold text-white text-[10px] shrink-0">AI</div>
+          <div class="max-w-[85%] bg-[#1a1a2b] text-slate-200 p-3 rounded-2xl rounded-tl-none border border-[#292942] whitespace-pre-line leading-relaxed">
+            ${response}
+          </div>
+        `;
+        chat.appendChild(aiBubble);
+        chat.scrollTop = chat.scrollHeight;
+      }, 700);
+    }
+
+    function clearAIChat() {
+      document.getElementById('aiChatBox').innerHTML = `
+        <div class="flex items-start gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center font-bold text-white text-[10px] shrink-0">AI</div>
+          <div class="max-w-[85%] bg-[#1a1a2b] text-slate-200 p-3 rounded-2xl rounded-tl-none border border-[#292942]">
+            Chat cleared. Naya sawal pooch sakte hain!
+          </div>
+        </div>
+      `;
+    }
+
+    // --- 7. HUB EMBED HANDLER (Faah, Waahchat, Khelbook, Study) ---
+    function loadHubFrame(type) {
+      const content = document.getElementById('hubFrameContent');
+      const title = document.getElementById('hubFrameTitle');
+      const extLink = document.getElementById('externalHubLink');
+
+      if (type === 'instagram') {
+        title.innerText = 'https://instagram.com';
+        extLink.href = 'https://instagram.com';
+        content.innerHTML = `
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-pink-600 via-rose-500 to-amber-500 flex items-center justify-center text-white mb-4 shadow-lg shadow-pink-500/30">
+            <i data-lucide="instagram" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-outfit">Faah - Instagram Portal</h3>
+          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4">Direct web environment for Instagram ID login and reel stream.</p>
+          <a href="https://www.instagram.com" target="_blank" class="bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs font-semibold px-5 py-2.5 rounded-xl shadow-lg">
+            Launch Instagram
+          </a>
+        `;
+      } else if (type === 'snapchat') {
+        title.innerText = 'https://web.snapchat.com';
+        extLink.href = 'https://web.snapchat.com';
+        content.innerHTML = `
+          <div class="w-16 h-16 rounded-2xl bg-amber-400 flex items-center justify-center text-black mb-4 shadow-lg shadow-amber-400/30">
+            <i data-lucide="ghost" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-outfit">Waahchat - Snapchat Portal</h3>
+          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4">Chat with friends and send snaps directly using your account.</p>
+          <a href="https://web.snapchat.com" target="_blank" class="bg-amber-400 text-black text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg">
+            Launch Snapchat Web
+          </a>
+        `;
+      } else if (type === 'facebook') {
+        title.innerText = 'https://m.facebook.com';
+        extLink.href = 'https://m.facebook.com';
+        content.innerHTML = `
+          <div class="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center text-white mb-4 shadow-lg shadow-blue-600/30">
+            <i data-lucide="facebook" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-outfit">Khelbook - Facebook Portal</h3>
+          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4">Lightweight Facebook login container without heavy ads.</p>
+          <a href="https://m.facebook.com" target="_blank" class="bg-blue-600 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg">
+            Launch Facebook Portal
+          </a>
+        `;
+      } else if (type === 'study') {
+        title.innerText = 'Study with Abhivansh - PW Portal';
+        extLink.href = 'https://www.pw.live';
+        content.innerHTML = `
+          <div class="w-16 h-16 rounded-2xl bg-emerald-600 flex items-center justify-center text-white mb-4 shadow-lg shadow-emerald-600/30">
+            <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white font-outfit">Study with Abhivansh (PW Batches)</h3>
+          <p class="text-xs text-slate-400 max-w-sm mt-1 mb-4">Physics, Chemistry, Maths revision materials aur video batches access.</p>
+          <a href="https://www.pw.live" target="_blank" class="bg-emerald-600 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg">
+            Open Study Batches
+          </a>
+        `;
+      }
+      lucide.createIcons();
+    }
+
+    // --- 8. DOWNLOADER & PAY (Features 6 & 7) ---
+    function simulateDownload(type) {
+      const url = document.getElementById('mediaUrlInput').value.trim();
+      const statusBox = document.getElementById('downloadStatusBox');
+      const statusText = document.getElementById('downloadStatusText');
+      const triggerBtn = document.getElementById('downloadTriggerBtn');
+
+      statusBox.classList.remove('hidden');
+      statusText.innerText = `Fetching stream for ${type}...`;
+      triggerBtn.classList.add('hidden');
+
+      setTimeout(() => {
+        statusText.innerText = `Ready! Download your high-quality ${type}`;
+        triggerBtn.classList.remove('hidden');
+        triggerBtn.href = playlist[0].src;
+        triggerBtn.setAttribute('download', `Rivanshh_Audio_Export.mp3`);
+      }, 1200);
+    }
+
+    // --- 9. ACCOUNT SWITCHER (Feature 1) ---
+    function toggleAccountModal() {
+      document.getElementById('accountModal').classList.toggle('hidden');
+    }
+
+    function chooseAccount(name, email) {
+      document.getElementById('activeAccountDisplay').innerText = name;
+      toggleAccountModal();
+      alertModal('Account Switched', `Logged in as ${name} (${email})`);
+    }
+
+    function alertModal(title, message) {
+      document.getElementById('customAlertTitle').innerText = title;
+      document.getElementById('customAlertMessage').innerText = message;
+      document.getElementById('customAlertModal').classList.remove('hidden');
+    }
+
+    // Initialize application on load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSong(0);
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
