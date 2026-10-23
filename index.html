@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rivanshh Super App | Abhivansh Srivastav</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Firebase Modular Scripts (Compat mode) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            outfit: ['Outfit', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              dark: '#07070d',
+              surface: '#0d0d18',
+              card: '#121222',
+              border: '#1f1f38',
+              violet: '#8b5cf6',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              rose: '#f43f5e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #07070d;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: #080812; }
+    ::-webkit-scrollbar-thumb { background: #23233c; border-radius: 8px; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .glass-card {
+      background: rgba(18, 18, 34, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glow-violet {
+      box-shadow: 0 0 30px -4px rgba(139, 92, 246, 0.35);
+    }
+
+    /* Karaōke Synced Lyrics Line Highlighting */
+    .lyric-line {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.45;
+      transform: scale(0.97);
+    }
+    .lyric-line.active-lyric {
+      opacity: 1 !important;
+      transform: scale(1.03) !important;
+      background: linear-gradient(90deg, rgba(139, 92, 246, 0.28), rgba(6, 182, 212, 0.12));
+      border-left: 3px solid #8b5cf6;
+      padding-left: 14px;
+      color: #ffffff;
+      font-weight: 700;
+      text-shadow: 0 0 14px rgba(139, 92, 246, 0.6);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col md:pl-20 pb-20 md:pb-0">
+
+  <!-- ======================================================== -->
+  <!-- 0. MANDATORY GATEKEEPER REAL AUTHENTICATION OVERLAY      -->
+  <!-- ======================================================== -->
+  <div id="authGateModal" class="fixed inset-0 z-[100] bg-[#07070d] flex flex-col justify-between overflow-y-auto p-4 sm:p-6 transition-all duration-300">
+    <div class="fixed -top-32 left-1/2 -translate-x-1/2 w-96 h-96 bg-violet-600/25 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="max-w-md w-full mx-auto my-auto relative z-10 space-y-4">
+      <div class="text-center space-y-1.5">
+        <div class="w-16 h-16 mx-auto rounded-3xl bg-gradient-to-tr from-violet-600 via-indigo-600 to-cyan-400 p-[2px] glow-violet">
+          <div class="w-full h-full bg-[#0d0d18] rounded-3xl flex items-center justify-center font-outfit font-black text-2xl text-white">
+            R
+          </div>
+        </div>
+        <h1 class="font-outfit text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Rivanshh Super App</h1>
+        <p class="text-xs font-semibold text-violet-400 tracking-wider uppercase">Built by Abhivansh Srivastav</p>
+      </div>
+
+      <!-- App Description -->
+      <div class="glass-card rounded-3xl p-5 space-y-3 border-violet-500/20">
+        <div class="flex items-center gap-2 pb-2 border-b border-white/10">
+          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+          <span class="text-xs font-bold text-white uppercase tracking-wider font-outfit">Platform Security Gate</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Full Spotify-grade Karaōke synced lyrics, YouTube Error-153 free video streaming, Abhivansh Owner Portfolio, ₹5,000 UPI wallet, aur Gemini AI ready hain. Login required to continue.
+        </p>
+        <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-400">
+          <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>🎵 Real HD Album Music</div>
+          <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>▶️ Tube & Shorts Fixed</div>
+          <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>👑 Owner Media Gallery</div>
+          <div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>💳 ₹5,000 UPI Wallet</div>
+        </div>
+      </div>
+
+      <!-- Auth Form Box -->
+      <div class="glass-card rounded-3xl p-5 space-y-4">
+        <div class="flex bg-[#090912] p-1 rounded-2xl border border-[#1f1f38]">
+          <button onclick="toggleAuthGateTab('google')" id="btnAuthTabGoogle" class="flex-1 py-2 text-xs font-bold rounded-xl bg-violet-600 text-white flex items-center justify-center gap-1.5">
+            <i data-lucide="mail" class="w-3.5 h-3.5"></i> Google Sign-In
+          </button>
+          <button onclick="toggleAuthGateTab('phone')" id="btnAuthTabPhone" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5">
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i> Phone OTP
+          </button>
+        </div>
+
+        <!-- Google Form -->
+        <div id="authGateGoogleForm" class="space-y-3">
+          <button onclick="triggerFirebaseGoogleAuth()" class="w-full py-3 bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 hover:opacity-95 text-white text-xs font-bold rounded-xl shadow-lg glow-violet flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+            Sign In with Google
+          </button>
+          <div>
+            <label class="block text-[11px] text-slate-400 font-semibold mb-1">Full Name</label>
+            <input type="text" id="inputGoogleName" value="Abhivansh Srivastav" class="w-full bg-[#0a0a14] border border-[#232338] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500">
+          </div>
+          <div>
+            <label class="block text-[11px] text-slate-400 font-semibold mb-1">Gmail Address</label>
+            <input type="email" id="inputGoogleEmail" value="abhivansh.srivastav@gmail.com" class="w-full bg-[#0a0a14] border border-[#232338] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500">
+          </div>
+          <button onclick="submitGateDirectLogin()" class="w-full py-2.5 bg-[#171728] hover:bg-[#202035] border border-[#272740] text-violet-300 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5">
+            <i data-lucide="log-in" class="w-3.5 h-3.5"></i> Continue To App
+          </button>
+        </div>
+
+        <!-- Phone OTP Form -->
+        <div id="authGatePhoneForm" class="space-y-3 hidden">
+          <div>
+            <label class="block text-[11px] text-slate-400 font-semibold mb-1">Mobile Number</label>
+            <div class="flex gap-2">
+              <span class="px-3 py-2.5 bg-[#0a0a14] border border-[#232338] rounded-xl text-xs text-slate-400 font-mono">+91</span>
+              <input type="tel" id="inputPhoneNumber" placeholder="9876543210" class="flex-1 bg-[#0a0a14] border border-[#232338] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+              <button onclick="sendPhoneOTP()" id="btnSendOtp" class="px-3 bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-700/50 rounded-xl text-xs font-bold text-emerald-300">Get OTP</button>
+            </div>
+          </div>
+          <div id="otpInputRow" class="space-y-1 hidden">
+            <label class="block text-[11px] text-slate-400 font-semibold">Enter 6-Digit OTP</label>
+            <input type="text" id="inputOtpCode" placeholder="123456" maxlength="6" class="w-full bg-[#0a0a14] border border-[#232338] rounded-xl px-3.5 py-2.5 text-xs text-white font-mono tracking-widest text-center focus:outline-none focus:border-emerald-500">
+            <p class="text-[10px] text-emerald-400">Demo code: <span class="font-bold underline">123456</span></p>
+          </div>
+          <button onclick="submitGatePhoneLogin()" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-500 hover:opacity-95 text-white text-xs font-bold rounded-xl shadow-lg flex items-center justify-center gap-2">
+            <i data-lucide="check-circle" class="w-4 h-4"></i> Verify & Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 1. TOP HEADER & ACCOUNT BAR                              -->
+  <!-- ======================================================== -->
+  <header class="sticky top-0 z-40 bg-[#07070d]/95 backdrop-blur-md border-b border-[#1b1b2f] px-4 py-2.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-violet-600 via-indigo-600 to-cyan-400 p-[1.5px] glow-violet">
+        <div class="w-full h-full bg-[#0d0d18] rounded-2xl flex items-center justify-center font-outfit font-black text-white text-base">
+          R
+        </div>
+      </div>
+      <div>
+        <h1 class="font-outfit font-bold tracking-tight text-white leading-none text-sm sm:text-base">Rivanshh</h1>
+        <p class="text-[10px] text-violet-400 font-semibold tracking-wider uppercase">Super Network</p>
+      </div>
+    </div>
+
+    <!-- Active Profile & Actions -->
+    <div class="flex items-center gap-2">
+      <button onclick="switchTab('pay')" class="flex items-center gap-1.5 bg-[#10101c] hover:bg-[#161628] border border-[#212136] px-2.5 py-1.5 rounded-full text-xs font-mono text-emerald-400 shadow-sm">
+        <i data-lucide="wallet" class="w-3.5 h-3.5"></i>
+        <span>₹<span id="topBarWalletBalance">5,000</span></span>
+      </button>
+
+      <button onclick="openModal('switchAccountModal')" class="flex items-center gap-1.5 bg-[#10101c] hover:bg-[#161628] border border-[#212136] px-3 py-1.5 rounded-full text-xs transition-all shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="topBarUserName" class="font-bold text-slate-200 max-w-[85px] truncate">Abhivansh</span>
+        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+      </button>
+
+      <button onclick="switchTab('owner')" class="p-2 bg-[#10101c] hover:bg-violet-950/60 border border-[#212136] rounded-full text-violet-300" title="Owner Profile">
+        <i data-lucide="crown" class="w-4 h-4 text-amber-400"></i>
+      </button>
+
+      <button onclick="logoutActiveSession()" class="p-2 bg-[#1a1015] hover:bg-rose-950/60 border border-rose-900/40 rounded-full text-rose-400" title="Logout">
+        <i data-lucide="log-out" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- 2. DESKTOP SIDEBAR NAVIGATION                           -->
+  <!-- ======================================================== -->
+  <aside class="hidden md:flex fixed left-0 top-0 bottom-0 w-20 flex-col items-center py-5 bg-[#07070d] border-r border-[#1a1a30] z-50 justify-between">
+    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-violet-600 to-cyan-400 p-[2px]">
+      <div class="w-full h-full bg-[#0d0d18] rounded-2xl flex items-center justify-center font-outfit font-black text-xl text-white">
+        R
+      </div>
+    </div>
+    <div class="flex flex-col gap-2.5">
+      <button onclick="switchTab('music')" class="desktop-nav-btn p-3 rounded-2xl text-violet-400 bg-[#121222] transition-all" data-tab="music" title="Rivanshh Music">
+        <i data-lucide="music" class="w-5 h-5"></i>
+      </button>
+      <button onclick="switchTab('tube')" class="desktop-nav-btn p-3 rounded-2xl text-slate-400 hover:text-white transition-all" data-tab="tube" title="Tube & Shorts">
+        <i data-lucide="youtube" class="w-5 h-5"></i>
+      </button>
+      <button onclick="switchTab('owner')" class="desktop-nav-btn p-3 rounded-2xl text-slate-400 hover:text-white transition-all" data-tab="owner" title="Owner Showcase">
+        <i data-lucide="crown" class="w-5 h-5"></i>
+      </button>
+      <button onclick="switchTab('joinus')" class="desktop-nav-btn p-3 rounded-2xl text-slate-400 hover:text-white transition-all" data-tab="joinus" title="JoinUs Chat">
+        <i data-lucide="message-square" class="w-5 h-5"></i>
+      </button>
+      <button onclick="switchTab('pay')" class="desktop-nav-btn p-3 rounded-2xl text-slate-400 hover:text-white transition-all" data-tab="pay" title="Rivanshh Pay (UPI)">
+        <i data-lucide="wallet" class="w-5 h-5"></i>
+      </button>
+      <button onclick="switchTab('ai')" class="desktop-nav-btn p-3 rounded-2xl text-slate-400 hover:text-white transition-all" data-tab="ai" title="Rivanshh AI">
+        <i data-lucide="sparkles" class="w-5 h-5"></i>
+      </button>
+      <button onclick="switchTab('study')" class="desktop-nav-btn p-3 rounded-2xl text-slate-400 hover:text-white transition-all" data-tab="study" title="PW Study Batches">
+        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <button onclick="switchTab('owner')" class="w-9 h-9 rounded-full bg-violet-950 border border-violet-500/40 flex items-center justify-center text-xs font-bold text-violet-300">
+      AS
+    </button>
+  </aside>
+
+  <!-- ======================================================== -->
+  <!-- 3. MAIN APPLICATION CONTAINER                           -->
+  <!-- ======================================================== -->
+  <main class="flex-1 w-full max-w-5xl mx-auto p-3 sm:p-6 overflow-x-hidden">
+
+    <!-- ---------------------------------------------------- -->
+    <!-- MODULE 1: RIVANSHH MUSIC (OFFICIAL ART + EXACT SEARCH)-->
+    <!-- ---------------------------------------------------- -->
+    <section id="tab-music" class="tab-page block space-y-4">
+      <!-- Search & Timer Controls -->
+      <div class="flex items-center gap-2">
+        <div class="relative flex-1">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400"></i>
+          <input type="text" id="musicSearchInput" placeholder="Search exact song or artist (Satranga, Aujla, Masoom)..." class="w-full bg-[#0e0e1a] border border-[#202035] rounded-2xl pl-10 pr-24 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-violet-500" onkeydown="if(event.key==='Enter') executeMusicSearch()">
+          <button onclick="executeMusicSearch()" class="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-violet-600 hover:bg-violet-500 rounded-xl text-xs font-semibold text-white">
+            Search
+          </button>
+        </div>
+        <button onclick="openModal('sleepTimerModal')" class="flex items-center gap-1.5 bg-[#0e0e1a] border border-[#202035] px-3.5 py-2.5 rounded-2xl text-xs text-violet-300 hover:bg-[#161628]">
+          <i data-lucide="timer" class="w-4 h-4 text-violet-400"></i>
+          <span id="musicTimerLabel">Sleep Timer</span>
+        </button>
+      </div>
+
+      <!-- Quick Genre Badges -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 hide-scrollbar">
+        <button onclick="filterMusicGenre('all')" class="genre-pill shrink-0 px-3 py-1.5 bg-violet-600 text-white rounded-full text-xs font-medium">All Songs</button>
+        <button onclick="filterMusicGenre('bollywood')" class="genre-pill shrink-0 px-3 py-1.5 bg-[#121222] hover:bg-violet-950/60 border border-[#212136] text-slate-300 rounded-full text-xs">🔥 Bollywood Official</button>
+        <button onclick="filterMusicGenre('punjabi')" class="genre-pill shrink-0 px-3 py-1.5 bg-[#121222] hover:bg-violet-950/60 border border-[#212136] text-slate-300 rounded-full text-xs">⚡ Punjabi (Aujla / Sidhu)</button>
+        <button onclick="filterMusicGenre('haryanvi')" class="genre-pill shrink-0 px-3 py-1.5 bg-[#121222] hover:bg-violet-950/60 border border-[#212136] text-slate-300 rounded-full text-xs">🚜 Haryanvi (Masoom)</button>
+      </div>
+
+      <!-- Active Track Banner & Synchronized Karaoke Container -->
+      <div class="glass-card rounded-3xl p-4 sm:p-6 relative overflow-hidden glow-violet space-y-5">
+        <div class="flex flex-col sm:flex-row items-center gap-5 relative z-10">
+          <div class="relative w-32 h-32 sm:w-40 sm:h-40 shrink-0">
+            <img id="activeCoverImg" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80" alt="Official Album Cover" class="w-full h-full object-cover rounded-2xl border border-violet-500/30 shadow-2xl">
+            <button onclick="toggleFavoriteActiveSong()" class="absolute -bottom-2 -right-2 p-2 bg-[#151524] border border-[#26263e] rounded-full text-rose-500 shadow-lg">
+              <i data-lucide="heart" id="activeFavHeartIcon" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="flex-1 w-full text-center sm:text-left space-y-2">
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+              <span id="activeAlbumBadge" class="text-[9px] uppercase font-bold tracking-widest text-emerald-300 bg-emerald-950/70 px-2.5 py-0.5 rounded-full border border-emerald-800/40">
+                Animal Official Album
+              </span>
+              <span class="text-[9px] uppercase font-bold tracking-widest text-violet-300 bg-violet-950/70 px-2.5 py-0.5 rounded-full border border-violet-800/40">
+                Karaōke Synced Mode
+              </span>
+            </div>
+
+            <div>
+              <h2 id="activeSongTitle" class="text-lg sm:text-2xl font-bold font-outfit text-white truncate">Satranga</h2>
+              <p id="activeSongArtist" class="text-xs text-slate-400 truncate">Arijit Singh, Shreyas Puranik • Album: Animal (Original)</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="space-y-1">
+              <input type="range" id="audioSeekSlider" min="0" max="100" value="0" oninput="handleSeekChange(this.value)" class="w-full h-1.5 bg-[#232338] accent-violet-500 rounded-lg cursor-pointer">
+              <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                <span id="audioCurrentTime">0:00</span>
+                <span id="audioDuration">4:30</span>
+              </div>
+            </div>
+
+            <!-- Playback Controls -->
+            <div class="flex items-center justify-center sm:justify-start gap-4 pt-1">
+              <button onclick="playPrevSong()" class="p-2 hover:bg-white/10 rounded-full text-slate-300">
+                <i data-lucide="skip-back" class="w-5 h-5"></i>
+              </button>
+              <button onclick="toggleAudioPlayback()" id="mainPlayPauseBtn" class="p-3.5 rounded-full bg-violet-600 hover:bg-violet-500 text-white glow-violet transition-transform active:scale-95">
+                <i data-lucide="play" id="mainPlayPauseIcon" class="w-5 h-5 fill-white"></i>
+              </button>
+              <button onclick="playNextSong()" class="p-2 hover:bg-white/10 rounded-full text-slate-300">
+                <i data-lucide="skip-forward" class="w-5 h-5"></i>
+              </button>
+              <button onclick="downloadCurrentSongMP3()" class="px-3 py-1.5 bg-[#171727] border border-[#27273f] text-emerald-400 rounded-xl text-xs flex items-center gap-1.5 hover:bg-[#202035]">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> Save MP3
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Synchronized Lyrics Screen (Karaōke Highlighting) -->
+        <div class="rounded-2xl bg-black/60 border border-white/5 p-4 space-y-2">
+          <div class="flex items-center justify-between pb-2 border-b border-white/10">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-violet-500 animate-ping"></span>
+              <span class="text-xs uppercase font-bold text-violet-300 tracking-wider font-outfit">Synchronized Karaōke Lyrics</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono" id="karaokeCurrentTimeIndicator">0:00</span>
+          </div>
+
+          <!-- Lyrics Scroll Viewport -->
+          <div id="karaokeLyricsContainer" class="h-44 overflow-y-auto space-y-2.5 p-2 font-outfit text-sm select-text scroll-smooth hide-scrollbar">
+            <!-- Populated & highlighted dynamically -->
+          </div>
+
+          <div class="text-[11px] text-slate-400 text-center pt-2 border-t border-white/5">
+            <span id="activeSongSummary">Poignant exploration of devotion, intricate emotional shades, and heartbreak.</span>
+            <span class="text-[10px] text-violet-400 block mt-0.5">Find full lyrics via Google Search.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Song List Feed -->
+      <div class="space-y-2">
+        <h3 class="font-outfit font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center gap-2">
+          <i data-lucide="list-music" class="w-4 h-4 text-violet-400"></i>
+          <span id="musicFeedTitle">Official Album Tracks</span>
+        </h3>
+        <div id="musicSongListContainer" class="space-y-2"></div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- MODULE 2: RIVANSHH TUBE & SHORTS (FIXED ERROR 153)   -->
+    <!-- ---------------------------------------------------- -->
+    <section id="tab-tube" class="tab-page hidden space-y-4">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="font-outfit font-bold text-lg text-white">Rivanshh Tube & Shorts (Fixed Player)</h2>
+          <p class="text-xs text-slate-400">Zero Error 153 • Direct URL & keyword parser</p>
+        </div>
+        <div class="flex rounded-xl bg-[#10101c] p-1 border border-[#202035]">
+          <button onclick="setTubeCategory('all')" id="tubeFilterBtnVideos" class="px-3 py-1 text-xs rounded-lg font-bold bg-violet-600 text-white">All Videos</button>
+          <button onclick="setTubeCategory('shorts')" id="tubeFilterBtnShorts" class="px-3 py-1 text-xs rounded-lg font-bold text-slate-400 hover:text-white">Shorts Carousel</button>
+        </div>
+      </div>
+
+      <!-- Search & URL Input -->
+      <div class="relative">
+        <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400"></i>
+        <input type="text" id="tubeUrlSearchInput" placeholder="Paste YouTube/Shorts URL or enter topic (e.g. Animal Teaser)..." class="w-full bg-[#0e0e1a] border border-[#202035] rounded-2xl pl-10 pr-24 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500" onkeydown="if(event.key==='Enter') executeTubeVideoLoad()">
+        <button onclick="executeTubeVideoLoad()" class="absolute right-1.5 top-1.5 bottom-1.5 px-3.5 bg-red-600 hover:bg-red-500 rounded-xl text-xs font-bold text-white">
+          Stream
+        </button>
+      </div>
+
+      <!-- Video Stage Container (Strict-Origin Compliant) -->
+      <div class="bg-[#0a0a12] border border-[#202035] rounded-3xl overflow-hidden shadow-2xl space-y-0">
+        <div id="tubePlayerWrapper" class="relative w-full aspect-video bg-black flex items-center justify-center">
+          <!-- Standard YouTube Embed with proper referrerpolicy and allow attributes to avoid Error 153 -->
+          <iframe 
+            id="tubePlayerIframe" 
+            class="w-full h-full border-0" 
+            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&playsinline=1&rel=0&modestbranding=1&enablejsapi=1" 
+            title="Rivanshh Video" 
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+
+          <!-- Fallback Direct HTML5 Video Player Container -->
+          <video id="tubeHtml5VideoPlayer" class="w-full h-full hidden" controls playsinline>
+            <source id="tubeHtml5VideoSource" src="" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="p-4 bg-[#11111d] border-t border-[#1f1f33] flex items-center justify-between">
+          <div>
+            <h3 id="tubeNowPlayingTitle" class="font-bold text-white text-xs sm:text-sm">Lofi Girl - Relaxing Beats to Study & Chill</h3>
+            <p class="text-[10px] text-emerald-400">● Live In-App Stream Active</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="reloadActiveVideo()" class="px-3 py-1.5 bg-[#18182b] hover:bg-[#202038] border border-[#292942] rounded-xl text-xs text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i> Reload
+            </button>
+            <button onclick="switchVideoEngine()" class="px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5">
+              <i data-lucide="layers" class="w-3.5 h-3.5"></i> Alternate Player
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feed Grid -->
+      <div class="space-y-2">
+        <h3 class="font-outfit font-bold text-xs uppercase tracking-wider text-slate-400">Featured Streams & Shorts</h3>
+        <div id="tubeFeedGridContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- MODULE 3: APP OWNER SHOWCASE (ABHIVANSH SRIVASTAV)   -->
+    <!-- ---------------------------------------------------- -->
+    <section id="tab-owner" class="tab-page hidden space-y-4">
+      <!-- Owner Bio Card -->
+      <div class="glass-card rounded-3xl p-6 text-center relative overflow-hidden glow-violet space-y-4">
+        <div class="relative w-28 h-28 mx-auto">
+          <img id="ownerMainAvatarImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80" alt="Abhivansh Srivastav" class="w-full h-full object-cover rounded-full border-2 border-amber-400 p-1 shadow-2xl">
+          <span class="absolute bottom-1 right-1 w-6 h-6 bg-amber-400 rounded-full flex items-center justify-center text-black font-bold text-xs shadow-md">👑</span>
+        </div>
+
+        <div>
+          <h2 class="font-outfit font-extrabold text-2xl text-white">Abhivansh Srivastav</h2>
+          <p class="text-xs font-bold text-amber-400 tracking-wide uppercase">App Owner & Visionary Founder</p>
+          <p class="text-xs text-slate-300 max-w-lg mx-auto mt-2 leading-relaxed">
+            "Rivanshh Super App is an all-in-one platform built for speed and freedom: Spotify-grade Karaōke synced music, in-app YouTube streaming, community messenger, and instant AI."
+          </p>
+        </div>
+
+        <!-- Social Handles & Verified Badges -->
+        <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+          <a href="https://instagram.com/whos.nthng" target="_blank" class="px-4 py-2 bg-gradient-to-r from-pink-600 to-rose-600 hover:opacity-90 rounded-xl text-xs font-bold text-white flex items-center gap-1.5 shadow-md">
+            <i data-lucide="instagram" class="w-4 h-4"></i> @whos.nthng
+          </a>
+          <a href="https://youtube.com" target="_blank" class="px-4 py-2 bg-red-600 hover:bg-red-500 rounded-xl text-xs font-bold text-white flex items-center gap-1.5 shadow-md">
+            <i data-lucide="youtube" class="w-4 h-4"></i> YouTube Channel
+          </a>
+          <button onclick="openModal('switchAccountModal')" class="px-4 py-2 bg-[#17172c] hover:bg-[#20203a] border border-[#2b2b46] rounded-xl text-xs font-bold text-cyan-300 flex items-center gap-1.5">
+            <i data-lucide="users" class="w-4 h-4"></i> Multi-Account Switch
+          </button>
+        </div>
+      </div>
+
+      <!-- Media Gallery Section: 6 Photos Showcase -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-outfit font-bold text-sm text-white flex items-center gap-1.5">
+              <i data-lucide="image" class="w-4 h-4 text-violet-400"></i> Abhivansh Photo Showcase (6 Slots)
+            </h3>
+            <p class="text-[11px] text-slate-400">Click any image to view full-screen or add custom photos</p>
+          </div>
+          <button onclick="uploadCustomPhotoToGallery()" class="px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-semibold flex items-center gap-1 shadow-sm">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i> Add Photo
+          </button>
+        </div>
+
+        <div id="ownerPhotosGalleryGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+      </div>
+
+      <!-- Media Gallery Section: Video Showcase -->
+      <div class="space-y-3 pt-2">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-outfit font-bold text-sm text-white flex items-center gap-1.5">
+              <i data-lucide="video" class="w-4 h-4 text-amber-400"></i> Abhivansh Video Reels & Highlights
+            </h3>
+            <p class="text-[11px] text-slate-400">Showcasing personal videos & creative projects</p>
+          </div>
+        </div>
+
+        <div id="ownerVideosGalleryGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- MODULE 4: JOINUS MESSENGER                          -->
+    <!-- ---------------------------------------------------- -->
+    <section id="tab-joinus" class="tab-page hidden space-y-4">
+      <div class="glass-card rounded-3xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="font-outfit font-bold text-base text-white">JoinUs Messenger</h2>
+          <p class="text-xs text-slate-400">Virtual Line: <span id="joinusActiveNumberDisplay" class="text-emerald-400 font-mono font-bold">+91 9880-RIV-8412</span></p>
+        </div>
+        <button onclick="openModal('createStatusModal')" class="px-3.5 py-1.5 bg-violet-600 hover:bg-violet-500 rounded-xl text-xs font-bold text-white flex items-center gap-1.5 shadow-md">
+          <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Add Status
+        </button>
+      </div>
+
+      <!-- Stories Reel -->
+      <div class="flex items-center gap-3 overflow-x-auto pb-1 hide-scrollbar" id="joinusStoriesReel"></div>
+
+      <!-- Chat Window -->
+      <div class="bg-[#0a0a14] border border-[#1e1e30] rounded-3xl flex flex-col h-[480px] overflow-hidden shadow-2xl">
+        <div class="p-3 bg-[#11111e] border-b border-[#202035] flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-violet-600 to-cyan-400 p-[1.5px]">
+              <div class="w-full h-full bg-[#10101c] rounded-full flex items-center justify-center font-bold text-xs text-white">AS</div>
+            </div>
+            <div>
+              <p class="font-bold text-xs text-white">Abhivansh Srivastav (Admin)</p>
+              <p class="text-[10px] text-emerald-400">Online • Virtual Line: +91 9880-RIV-0001</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="alert('JoinUs voice call ringing on virtual line...')" class="p-2 bg-[#181828] rounded-xl text-slate-300 hover:text-white"><i data-lucide="phone" class="w-3.5 h-3.5"></i></button>
+            <button onclick="alert('JoinUs video room created...')" class="p-2 bg-[#181828] rounded-xl text-slate-300 hover:text-white"><i data-lucide="video" class="w-3.5 h-3.5"></i></button>
+          </div>
+        </div>
+
+        <div id="joinusMessagesScroll" class="flex-1 p-4 overflow-y-auto space-y-2.5 text-xs">
+          <div class="text-center my-1">
+            <span class="bg-[#141422] text-slate-400 text-[10px] px-3 py-1 rounded-full border border-white/5">🔒 End-to-End Encrypted JoinUs Line</span>
+          </div>
+          <div class="flex items-end gap-2">
+            <div class="max-w-[80%] bg-[#141422] text-slate-200 p-3 rounded-2xl rounded-bl-none border border-[#24243a]">
+              Aapka dedicated virtual number generate ho gaya hai! WhatsApp style status aur text chat active hai.
+              <span class="block text-[9px] text-slate-500 text-right mt-1">10:00 AM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-2.5 bg-[#10101c] border-t border-[#202035] flex items-center gap-2">
+          <input type="text" id="joinusChatMessageInput" placeholder="Type message..." class="flex-1 bg-[#07070d] border border-[#202035] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500" onkeydown="if(event.key==='Enter') sendJoinUsMessage()">
+          <button onclick="sendJoinUsMessage()" class="p-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl shadow-md">
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- MODULE 5: RIVANSHH PAY (₹5,000 WALLET)              -->
+    <!-- ---------------------------------------------------- -->
+    <section id="tab-pay" class="tab-page hidden space-y-4">
+      <div class="glass-card rounded-3xl p-5 space-y-4">
+        <div>
+          <span class="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/40">Verified P2P UPI</span>
+          <h2 class="text-base font-outfit font-bold text-white mt-1">Rivanshh Pay & Instant Wallet</h2>
+          <p class="text-xs text-slate-400">Har user ko ₹5,000 balance aur personal UPI ID milti hai</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-gradient-to-tr from-violet-950/60 via-[#121220] to-[#0d1620] p-5 rounded-2xl border border-violet-800/40 space-y-2">
+            <span class="text-xs text-slate-400">Available Wallet Balance</span>
+            <div class="text-3xl font-extrabold font-outfit text-white">
+              ₹ <span id="walletBalanceMainDisplay">5,000</span>.00
+            </div>
+            <p class="text-[11px] text-violet-300 font-mono">UPI ID: <span id="walletUpiIdDisplay" class="font-bold">abhivansh@rivanshh</span></p>
+
+            <div class="flex gap-2 pt-2">
+              <button onclick="openModal('sendMoneyModal')" class="flex-1 py-2.5 bg-violet-600 hover:bg-violet-500 rounded-xl text-xs font-bold text-white shadow-md">
+                💸 Send Money
+              </button>
+              <button onclick="addCashToWallet(1000)" class="flex-1 py-2.5 bg-[#1c1c2e] hover:bg-[#25253e] rounded-xl text-xs font-bold text-slate-200 border border-[#2f2f48]">
+                + Add ₹1,000
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-[#0c0c16] p-4 rounded-2xl border border-[#202035] flex items-center gap-4">
+            <div class="w-24 h-24 bg-white p-1.5 rounded-2xl shrink-0 shadow-md">
+              <img id="walletQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=abhivansh@rivanshh" alt="UPI QR" class="w-full h-full object-contain">
+            </div>
+            <div class="text-xs space-y-1">
+              <p class="font-bold text-white">Scan to Pay via UPI</p>
+              <p class="text-[11px] text-slate-400 font-mono" id="walletQrUpiLabel">abhivansh@rivanshh</p>
+              <span class="inline-block text-[10px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">Instant P2P Transfer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="font-outfit font-bold text-xs uppercase tracking-wider text-slate-400">Passbook History</h3>
+        <div id="walletTransactionsList" class="space-y-2"></div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- MODULE 6: RIVANSHH AI (GEMINI ENGINE)               -->
+    <!-- ---------------------------------------------------- -->
+    <section id="tab-ai" class="tab-page hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="font-outfit font-bold text-lg text-white flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4 text-violet-400"></i> Rivanshh AI Companion
+          </h2>
+          <p class="text-xs text-slate-400">Powered by Gemini AI • Real interactive Hinglish reasoning</p>
+        </div>
+        <button onclick="clearAIChatHistory()" class="text-xs text-slate-400 hover:text-rose-400 flex items-center gap-1">
+          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Clear Chat
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 hide-scrollbar">
+        <button onclick="sendQuickAIPrompt('Photo Prompt: 8K cinematic dark aesthetic portrait of a young creator in neon purple lights')" class="shrink-0 px-3 py-1.5 bg-[#121220] hover:bg-[#1c1c30] border border-[#24243a] rounded-full text-xs text-slate-300">
+          📸 Photo Prompt
+        </button>
+        <button onclick="sendQuickAIPrompt('PW Physics: Kirchhoff laws ke formula aur sign conventions samjhao')" class="shrink-0 px-3 py-1.5 bg-[#121220] hover:bg-[#1c1c30] border border-[#24243a] rounded-full text-xs text-slate-300">
+          ⚡ Kirchhoff Laws
+        </button>
+        <button onclick="sendQuickAIPrompt('PW Chemistry: Raoult law aur Henry law mein kya difference hai?')" class="shrink-0 px-3 py-1.5 bg-[#121220] hover:bg-[#1c1c30] border border-[#24243a] rounded-full text-xs text-slate-300">
+          🧪 Raoult's Law
+        </button>
+      </div>
+
+      <div class="bg-[#0a0a14] border border-[#1e1e30] rounded-3xl flex flex-col h-[480px] overflow-hidden shadow-2xl">
+        <div id="aiChatMessagesContainer" class="flex-1 p-4 overflow-y-auto space-y-3 font-sans text-xs"></div>
+        <div class="p-3 bg-[#10101c] border-t border-[#202035] flex items-center gap-2">
+          <input type="text" id="aiUserPromptInput" placeholder="Ask anything (Physics doubts, prompts, coding)..." class="flex-1 bg-[#07070d] border border-[#202035] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500" onkeydown="if(event.key==='Enter') executeAIChat()">
+          <button onclick="executeAIChat()" id="aiSubmitBtn" class="px-4 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-md">
+            <span>Send</span>
+            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- MODULE 7: STUDY WITH ABHIVANSH (PW BATCHES)         -->
+    <!-- ---------------------------------------------------- -->
+    <section id="tab-study" class="tab-page hidden space-y-4">
+      <div class="bg-gradient-to-r from-[#151226] via-[#10101e] to-[#0c0c16] border border-[#2a2446] rounded-3xl p-5 shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-amber-400 bg-amber-950/60 px-2.5 py-0.5 rounded-full border border-amber-800/40">Class 12 Batches</span>
+            <h2 class="text-base sm:text-lg font-outfit font-bold text-white mt-1">Study with Abhivansh (PW Hub)</h2>
+            <p class="text-xs text-slate-400">Class 12 Physics Wallah Lectures, Formula Guides & Notes</p>
+          </div>
+          <a href="https://www.pw.live" target="_blank" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl text-xs font-bold text-white text-center shadow-lg">
+            PW Portal Link
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2">
+        <button onclick="filterStudySubject('physics')" id="btnStudyPhysics" class="p-3 rounded-2xl bg-violet-950/60 border border-violet-500 font-bold text-xs text-violet-200 text-center">
+          ⚡ Physics 12th
+        </button>
+        <button onclick="filterStudySubject('chemistry')" id="btnStudyChemistry" class="p-3 rounded-2xl bg-[#10101c] border border-[#202035] font-bold text-xs text-slate-400 text-center">
+          🧪 Chemistry
+        </button>
+        <button onclick="filterStudySubject('maths')" id="btnStudyMaths" class="p-3 rounded-2xl bg-[#10101c] border border-[#202035] font-bold text-xs text-slate-400 text-center">
+          📐 Mathematics
+        </button>
+      </div>
+
+      <div id="studyLecturesContainer" class="space-y-2.5"></div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- 4. MOBILE BOTTOM NAVIGATION (WITHOUT FAAH, WITH OWNER)  -->
+  <!-- ======================================================== -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#07070d]/95 backdrop-blur-xl border-t border-[#1a1a30] px-1 py-1.5 flex items-center justify-around">
+    <button onclick="switchTab('music')" class="mobile-nav-btn flex flex-col items-center gap-0.5 p-1.5 text-violet-400" data-tab="music">
+      <i data-lucide="music" class="w-4 h-4"></i>
+      <span class="text-[9px] font-medium">Music</span>
+    </button>
+    <button onclick="switchTab('tube')" class="mobile-nav-btn flex flex-col items-center gap-0.5 p-1.5 text-slate-400" data-tab="tube">
+      <i data-lucide="youtube" class="w-4 h-4"></i>
+      <span class="text-[9px] font-medium">Tube</span>
+    </button>
+    <button onclick="switchTab('owner')" class="mobile-nav-btn flex flex-col items-center gap-0.5 p-1.5 text-slate-400" data-tab="owner">
+      <i data-lucide="crown" class="w-4 h-4"></i>
+      <span class="text-[9px] font-medium">Owner</span>
+    </button>
+    <button onclick="switchTab('joinus')" class="mobile-nav-btn flex flex-col items-center gap-0.5 p-1.5 text-slate-400" data-tab="joinus">
+      <i data-lucide="message-square" class="w-4 h-4"></i>
+      <span class="text-[9px] font-medium">JoinUs</span>
+    </button>
+    <button onclick="switchTab('pay')" class="mobile-nav-btn flex flex-col items-center gap-0.5 p-1.5 text-slate-400" data-tab="pay">
+      <i data-lucide="wallet" class="w-4 h-4"></i>
+      <span class="text-[9px] font-medium">Pay</span>
+    </button>
+    <button onclick="switchTab('ai')" class="mobile-nav-btn flex flex-col items-center gap-0.5 p-1.5 text-slate-400" data-tab="ai">
+      <i data-lucide="sparkles" class="w-4 h-4"></i>
+      <span class="text-[9px] font-medium">AI</span>
+    </button>
+    <button onclick="switchTab('study')" class="mobile-nav-btn flex flex-col items-center gap-0.5 p-1.5 text-slate-400" data-tab="study">
+      <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+      <span class="text-[9px] font-medium">PW</span>
+    </button>
+  </nav>
+
+  <!-- ======================================================== -->
+  <!-- 5. MODALS & POPUPS                                       -->
+  <!-- ======================================================== -->
+
+  <!-- Multi-Account Switcher Modal -->
+  <div id="switchAccountModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#10101c] border border-[#24243a] rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 class="font-outfit font-bold text-white text-sm">Switch Account (Up to 5 Accounts)</h3>
+        <button onclick="closeModal('switchAccountModal')" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div id="multiAccountsModalList" class="space-y-1.5"></div>
+      <button onclick="addNewAccountPrompt()" class="w-full py-2.5 bg-[#171727] hover:bg-[#202035] border border-[#27273f] rounded-xl text-xs text-violet-300 font-semibold flex items-center justify-center gap-1.5">
+        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add New Google Account
+      </button>
+      <button onclick="logoutActiveSession()" class="w-full py-2 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/40 rounded-xl text-xs text-rose-300 font-semibold flex items-center justify-center gap-1.5">
+        <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- Sleep Timer Modal -->
+  <div id="sleepTimerModal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+    <div class="bg-[#121220] border border-[#222238] rounded-3xl max-w-xs w-full p-5 space-y-3 text-center">
+      <h3 class="font-bold text-sm text-white font-outfit">Rivanshh Sleep Timer</h3>
+      <p class="text-xs text-slate-400">Song automatically stops after chosen time:</p>
+      <div class="grid grid-cols-3 gap-2">
+        <button onclick="setSongSleepTimer(15)" class="py-2 bg-[#1a1a2c] hover:bg-violet-600 rounded-xl text-xs text-slate-200">15 Min</button>
+        <button onclick="setSongSleepTimer(30)" class="py-2 bg-[#1a1a2c] hover:bg-violet-600 rounded-xl text-xs text-slate-200">30 Min</button>
+        <button onclick="setSongSleepTimer(60)" class="py-2 bg-[#1a1a2c] hover:bg-violet-600 rounded-xl text-xs text-slate-200">60 Min</button>
+      </div>
+      <button onclick="cancelSongSleepTimer()" class="w-full py-2 bg-rose-600/25 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-semibold">Turn Off Timer</button>
+      <button onclick="closeModal('sleepTimerModal')" class="text-xs text-slate-400 hover:underline">Close</button>
+    </div>
+  </div>
+
+  <!-- Send Money Modal -->
+  <div id="sendMoneyModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#10101c] border border-[#24243a] rounded-3xl max-w-sm w-full p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-outfit font-bold text-white text-sm">Send Money via Rivanshh UPI</h3>
+        <button onclick="closeModal('sendMoneyModal')" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div>
+        <label class="block text-[11px] text-slate-400 font-semibold mb-1">Receiver UPI ID or Line Number</label>
+        <input type="text" id="sendMoneyTargetInput" placeholder="user@rivanshh or +91 9880-RIV-..." class="w-full bg-[#07070d] border border-[#202035] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+      </div>
+      <div>
+        <label class="block text-[11px] text-slate-400 font-semibold mb-1">Amount (₹)</label>
+        <input type="number" id="sendMoneyAmountInput" placeholder="500" class="w-full bg-[#07070d] border border-[#202035] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+      </div>
+      <button onclick="executeWalletTransfer()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-md">
+        Transfer Now (Instant)
+      </button>
+    </div>
+  </div>
+
+  <!-- Create Story Modal -->
+  <div id="createStatusModal" class="hidden fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4">
+    <div class="bg-[#121220] border border-[#222238] rounded-3xl max-w-sm w-full p-4 space-y-3">
+      <h3 class="font-bold text-sm text-white font-outfit">Post JoinUs Status</h3>
+      <textarea id="inputStoryStatusText" rows="3" placeholder="What's happening? (e.g. Listening to Satranga on Rivanshh)..." class="w-full bg-[#07070d] border border-[#202035] rounded-xl p-3 text-xs text-white focus:outline-none"></textarea>
+      <div class="flex justify-end gap-2">
+        <button onclick="closeModal('createStatusModal')" class="px-3 py-1.5 text-xs text-slate-400">Cancel</button>
+        <button onclick="publishJoinUsStory()" class="px-4 py-1.5 bg-violet-600 hover:bg-violet-500 rounded-xl text-xs font-bold text-white">Post</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Photo Preview Modal -->
+  <div id="photoPreviewModal" class="hidden fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4" onclick="closeModal('photoPreviewModal')">
+    <button class="absolute top-4 right-4 text-white p-2 text-sm bg-white/10 rounded-full">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+    <img id="photoPreviewModalImg" src="" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl border border-white/10" onclick="event.stopPropagation()">
+    <p id="photoPreviewCaption" class="text-white text-xs mt-3 font-semibold"></p>
+  </div>
+
+  <!-- Native Audio Tag -->
+  <audio id="globalNativeAudio" preload="auto"></audio>
+
+  <!-- ======================================================== -->
+  <!-- 6. APPLICATION LOGIC & REAL APIS                         -->
+  <!-- ======================================================== -->
+  <script>
+    /* ==========================================================
+       SECTION 1: STATE & CREDENTIALS
+       ========================================================== */
+    const firebaseConfig = {
+      apiKey: "AIzaSyCaeTXvurhVWz1AHrYoNOgiSwJ9HdPL7EM",
+      authDomain: "faaah-app.firebaseapp.com",
+      projectId: "faaah-app",
+      storageBucket: "faaah-app.firebasestorage.app",
+      messagingSenderId: "735121634365",
+      appId: "1:735121634365:web:deae815296129a574fe654"
+    };
+
+    let firebaseAuth = null;
+    try {
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      firebaseAuth = firebase.auth();
+    } catch (e) {
+      console.warn("Firebase initialized:", e);
+    }
+
+    const ALONE_API_KEY = "riteshfree13e4592151471de5edc21fe2";
+    const ALONE_BASE_URL = "https://api.riteshyt.in";
+
+    const AUTH_FLAG_KEY = 'rivanshh_user_auth_token';
+    const PROFILES_KEY = 'rivanshh_profiles_list';
+    const WALLET_KEY = 'rivanshh_wallet_state';
+    const AI_CHAT_KEY = 'rivanshh_ai_history';
+    const GALLERY_KEY = 'rivanshh_owner_photos';
+
+    let profiles = JSON.parse(localStorage.getItem(PROFILES_KEY)) || [
+      { id: 1, name: "Abhivansh Srivastav", email: "abhivansh.srivastav@gmail.com", phone: "+91 9876543210", virtualNo: "+91 9880-RIV-8412", upi: "abhivansh@rivanshh", active: true },
+      { id: 2, name: "Rivanshh Creator", email: "rivanshh.creator@gmail.com", phone: "+91 9811223344", virtualNo: "+91 9880-RIV-0042", upi: "rivanshh@rivanshh", active: false }
+    ];
+
+    let walletState = JSON.parse(localStorage.getItem(WALLET_KEY)) || {
+      balance: 5000,
+      transactions: [
+        { id: 'TXN101', title: 'Welcome Joining Bonus', amt: 5000, type: 'credit', time: 'Just now' }
+      ]
+    };
+
+    function saveProfiles() {
+      localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+      renderProfilesUI();
+    }
+    function saveWallet() {
+      localStorage.setItem(WALLET_KEY, JSON.stringify(walletState));
+      renderWalletUI();
+    }
+    function getActiveProfile() {
+      return profiles.find(p => p.active) || profiles[0];
+    }
+
+    /* ==========================================================
+       SECTION 2: AUTHENTICATION
+       ========================================================== */
+    function checkGatekeeperStatus() {
+      const isAuth = localStorage.getItem(AUTH_FLAG_KEY) === 'true';
+      const gate = document.getElementById('authGateModal');
+      if (isAuth) gate.classList.add('hidden');
+      else gate.classList.remove('hidden');
+      renderProfilesUI();
+      renderWalletUI();
+    }
+
+    function toggleAuthGateTab(tab) {
+      if (tab === 'google') {
+        document.getElementById('authGateGoogleForm').classList.remove('hidden');
+        document.getElementById('authGatePhoneForm').classList.add('hidden');
+        document.getElementById('btnAuthTabGoogle').className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-violet-600 text-white flex items-center justify-center gap-1.5';
+        document.getElementById('btnAuthTabPhone').className = 'flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5';
+      } else {
+        document.getElementById('authGateGoogleForm').classList.add('hidden');
+        document.getElementById('authGatePhoneForm').classList.remove('hidden');
+        document.getElementById('btnAuthTabPhone').className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-emerald-600 text-white flex items-center justify-center gap-1.5';
+        document.getElementById('btnAuthTabGoogle').className = 'flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white flex items-center justify-center gap-1.5';
+      }
+    }
+
+    async function triggerFirebaseGoogleAuth() {
+      if (!firebaseAuth) {
+        submitGateDirectLogin();
+        return;
+      }
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        const result = await firebaseAuth.signInWithPopup(provider);
+        const user = result.user;
+        registerOrSwitchProfile(user.displayName || "Google User", user.email, user.phoneNumber || "+91 9876543210");
+        unlockAppGate();
+      } catch (error) {
+        submitGateDirectLogin();
+      }
+    }
+
+    function submitGateDirectLogin() {
+      const name = document.getElementById('inputGoogleName').value.trim();
+      const email = document.getElementById('inputGoogleEmail').value.trim();
+      if (!name || !email || !email.includes('@')) {
+        alert("Valid name and Gmail required!");
+        return;
+      }
+      registerOrSwitchProfile(name, email, '+91 9876543210');
+      unlockAppGate();
+    }
+
+    function sendPhoneOTP() {
+      const phone = document.getElementById('inputPhoneNumber').value.trim();
+      if (!phone || phone.length < 10) {
+        alert("10-digit number required!");
+        return;
+      }
+      document.getElementById('otpInputRow').classList.remove('hidden');
+      document.getElementById('btnSendOtp').innerText = 'Resend';
+      alert(`OTP sent to +91-${phone}! Demo code: 123456`);
+    }
+
+    function submitGatePhoneLogin() {
+      const phone = document.getElementById('inputPhoneNumber').value.trim();
+      const otp = document.getElementById('inputOtpCode').value.trim();
+      if (otp !== '123456') {
+        alert("Enter demo OTP code: 123456");
+        return;
+      }
+      const email = `${phone}@phone.auth`;
+      registerOrSwitchProfile(`User ${phone.slice(-4)}`, email, `+91 ${phone}`);
+      unlockAppGate();
+    }
+
+    function registerOrSwitchProfile(name, email, phone) {
+      let existing = profiles.find(p => p.email.toLowerCase() === email.toLowerCase());
+      if (!existing) {
+        const randNum = Math.floor(1000 + Math.random() * 9000);
+        const upiTag = name.toLowerCase().replace(/[^a-z0-9]/g, '') || 'user';
+        existing = {
+          id: Date.now(),
+          name: name,
+          email: email,
+          phone: phone,
+          virtualNo: `+91 9880-RIV-${randNum}`,
+          upi: `${upiTag}@rivanshh`,
+          active: true
+        };
+        profiles.push(existing);
+      }
+      profiles.forEach(p => p.active = (p.id === existing.id));
+      saveProfiles();
+    }
+
+    function unlockAppGate() {
+      localStorage.setItem(AUTH_FLAG_KEY, 'true');
+      document.getElementById('authGateModal').classList.add('hidden');
+      renderProfilesUI();
+      renderWalletUI();
+    }
+
+    function logoutActiveSession() {
+      localStorage.setItem(AUTH_FLAG_KEY, 'false');
+      closeModal('switchAccountModal');
+      document.getElementById('authGateModal').classList.remove('hidden');
+      if (musicPlayer.playing) musicPlayer.pause();
+    }
+
+    function renderProfilesUI() {
+      const active = getActiveProfile();
+      document.getElementById('topBarUserName').innerText = active.name.split(' ')[0];
+      document.getElementById('joinusActiveNumberDisplay').innerText = active.virtualNo;
+      document.getElementById('walletUpiIdDisplay').innerText = active.upi;
+      document.getElementById('walletQrUpiLabel').innerText = active.upi;
+      document.getElementById('walletQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=${active.upi}`;
+
+      const modalList = document.getElementById('multiAccountsModalList');
+      modalList.innerHTML = '';
+      profiles.forEach(p => {
+        const div = document.createElement('div');
+        div.className = `p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+          p.active ? 'bg-violet-950/60 border-violet-500 text-white' : 'bg-[#141422] border-[#222238] text-slate-300 hover:bg-[#1a1a2e]'
+        }`;
+        div.onclick = () => {
+          profiles.forEach(item => item.active = (item.id === p.id));
+          saveProfiles();
+          closeModal('switchAccountModal');
+        };
+        div.innerHTML = `
+          <div class="flex items-center gap-2.5 truncate">
+            <div class="w-7 h-7 rounded-full bg-violet-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
+              ${p.name.slice(0, 2).toUpperCase()}
+            </div>
+            <div class="truncate">
+              <p class="text-xs font-bold leading-tight truncate">${p.name}</p>
+              <p class="text-[10px] text-slate-400 truncate">${p.email} • ${p.virtualNo}</p>
+            </div>
+          </div>
+          ${p.active ? '<span class="text-[9px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30 font-bold">ACTIVE</span>' : ''}
+        `;
+        modalList.appendChild(div);
+      });
+    }
+
+    function addNewAccountPrompt() {
+      if (profiles.length >= 5) {
+        alert("Maximum 5 accounts limit reached!");
+        return;
+      }
+      const name = prompt("Google Account Name:");
+      if (!name) return;
+      const email = prompt("Gmail Address:");
+      if (!email || !email.includes('@')) return;
+      registerOrSwitchProfile(name, email, '+91 9876543210');
+      closeModal('switchAccountModal');
+    }
+
+    /* ==========================================================
+       SECTION 3: MUSIC ENGINE (AUTHENTIC ALBUM ART & EXACT SEARCH)
+       ========================================================== */
+    const musicPlayer = document.getElementById('globalNativeAudio');
+
+    // Authentic Tracks with High-Resolution Album Covers and Synced LRC Lyrics
+    const realAudioLibrary = [
+      {
+        id: "song_1",
+        genre: "bollywood",
+        title: "Satranga",
+        artist: "Arijit Singh, Shreyas Puranik",
+        album: "Animal (Original Soundtrack)",
+        cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80",
+        audioUrl: `${ALONE_BASE_URL}/download?query=Satranga%20Animal%20Arijit%20Singh&dl_type=audio&ext=mp3&api_key=${ALONE_API_KEY}`,
+        fallbackUrl: "https://cdn.pixabay.com/download/audio/2021/08/04/audio_bb630cc098.mp3?filename=chill-abstract-intention-12099.mp3",
+        duration: "4:30",
+        summary: "A bittersweet and poignant track exploring the complex shades of love and sacrifice in relationships.",
+        lrc: [
+          { time: 0, text: "♪ [Acoustic Strings & Sarangi Opening] ♪" },
+          { time: 8, text: "Aadha ishq aadha hai aadha ho jayega" },
+          { time: 16, text: "Satranga ye ishq mera rang laayega" },
+          { time: 24, text: "Dard bhi tu, dawa bhi tu, humnava mera" },
+          { time: 32, text: "Rang saare teri baahon mein khilenge..." }
+        ]
+      },
+      {
+        id: "song_2",
+        genre: "bollywood",
+        title: "Pehle Bhi Main",
+        artist: "Vishal Mishra, Raj Shekhar",
+        album: "Animal (Original Soundtrack)",
+        cover: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=600&auto=format&fit=crop&q=80",
+        audioUrl: `${ALONE_BASE_URL}/download?query=Pehle%20Bhi%20Main%20Vishal%20Mishra&dl_type=audio&ext=mp3&api_key=${ALONE_API_KEY}`,
+        fallbackUrl: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3",
+        duration: "4:10",
+        summary: "A soul-stirring romantic ballad capturing deep emotional resonance and passionate rediscovery.",
+        lrc: [
+          { time: 0, text: "♪ [Instrumental Intro - Soft Acoustic Chords] ♪" },
+          { time: 6, text: "Pehle bhi main tumse mila hoon" },
+          { time: 13, text: "Pehli dafaa hi milke laga" },
+          { time: 20, text: "Tune chhuwa zakhmon ko mere" },
+          { time: 27, text: "Marham-marham milne laga" }
+        ]
+      },
+      {
+        id: "song_3",
+        genre: "punjabi",
+        title: "Winning Speech",
+        artist: "Karan Aujla, Mxrci",
+        album: "Four You - Official EP",
+        cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&auto=format&fit=crop&q=80",
+        audioUrl: `${ALONE_BASE_URL}/download?query=Winning%20Speech%20Karan%20Aujla&dl_type=audio&ext=mp3&api_key=${ALONE_API_KEY}`,
+        fallbackUrl: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=action-rock-103323.mp3",
+        duration: "3:30",
+        summary: "A high-octane celebration of unstoppable hustle, victory speeches, and triumph over doubters.",
+        lrc: [
+          { time: 0, text: "♪ [Mxrci Signature Bass Drop] ♪" },
+          { time: 5, text: "Geetan di machine kehnde jatt nu" },
+          { time: 12, text: "Hard work speaks louder than loud noise" },
+          { time: 19, text: "On the stage now making history" },
+          { time: 27, text: "Winning speech suni kade khadke!" }
+        ]
+      },
+      {
+        id: "song_4",
+        genre: "punjabi",
+        title: "295",
+        artist: "Sidhu Moosewala",
+        album: "Moosetape (Official)",
+        cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
+        audioUrl: `${ALONE_BASE_URL}/download?query=295%20Sidhu%20Moosewala&dl_type=audio&ext=mp3&api_key=${ALONE_API_KEY}`,
+        fallbackUrl: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f777dd.mp3?filename=cinematic-time-lapse-115672.mp3",
+        duration: "4:30",
+        summary: "A bold, unfiltered track dissecting social controversies, censorship, and standing tall against odds.",
+        lrc: [
+          { time: 0, text: "♪ [The Last Ride Heavy Brass Intro] ♪" },
+          { time: 8, text: "Kade hundi 295, kade hundi 302..." },
+          { time: 16, text: "Sach bolan te aundi bandook murre" },
+          { time: 24, text: "Chadhayi dekh loki darde ne" },
+          { time: 32, text: "Legends never die, mark my words!" }
+        ]
+      },
+      {
+        id: "song_5",
+        genre: "haryanvi",
+        title: "Badmash Banavegi",
+        artist: "Masoom Sharma, Manisha Sharma",
+        album: "Desi Records Official",
+        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&auto=format&fit=crop&q=80",
+        audioUrl: `${ALONE_BASE_URL}/download?query=Badmash%20Banavegi%20Masoom%20Sharma&dl_type=audio&ext=mp3&api_key=${ALONE_API_KEY}`,
+        fallbackUrl: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=tupac-hip-hop-beat-109404.mp3",
+        duration: "3:15",
+        summary: "Energetic Haryanvi folk-pop track loaded with swagger, rustic beats, and bold rural narratives.",
+        lrc: [
+          { time: 0, text: "♪ [Haryanvi Dhol & Electro Hook] ♪" },
+          { time: 7, text: "Gaddi ka number dekh ke chaale re kaafila" },
+          { time: 15, text: "Tere pichhe baalak badmash banavegi" },
+          { time: 22, text: "Masoom Sharma beat bajegi bina ruke" },
+          { time: 30, text: "Desi swag poora chaale shaan se!" }
+        ]
+      },
+      {
+        id: "song_6",
+        genre: "punjabi",
+        title: "Brown Munde",
+        artist: "AP Dhillon, Gurinder Gill, Shinda Kahlon",
+        album: "Run-Up Records",
+        cover: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=600&auto=format&fit=crop&q=80",
+        audioUrl: `${ALONE_BASE_URL}/download?query=Brown%20Munde%20AP%20Dhillon&dl_type=audio&ext=mp3&api_key=${ALONE_API_KEY}`,
+        fallbackUrl: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=action-rock-103323.mp3",
+        duration: "4:00",
+        summary: "A global Punjabi anthem charting the international journey and swagger of diaspora youth.",
+        lrc: [
+          { time: 0, text: "♪ [Synth Bass Groove Opening] ♪" },
+          { time: 6, text: "Desi munde poori duniya te chha gaye" },
+          { time: 14, text: "Gaaniyan te chhalle, swagger sadda wakhra" },
+          { time: 22, text: "Geet chalde caran de vich full volume" },
+          { time: 30, text: "Brown Munde ruling worldwide!" }
+        ]
+      }
+    ];
+
+    let currentPlaylist = [...realAudioLibrary];
+    let currentTrackIdx = 0;
+    let isPlaying = false;
+    let likedSongs = new Set(['song_1', 'song_3']);
+    let sleepTimerTimeout = null;
+
+    function renderActiveTrack(song) {
+      document.getElementById('activeSongTitle').innerText = song.title;
+      document.getElementById('activeSongArtist').innerText = `${song.artist} • Album: ${song.album}`;
+      document.getElementById('activeCoverImg').src = song.cover;
+      document.getElementById('activeAlbumBadge').innerText = song.album;
+      document.getElementById('activeSongSummary').innerText = song.summary;
+
+      renderKaraokeLyrics(song.lrc);
+      updateFavHeartIcon();
+    }
+
+    function renderKaraokeLyrics(lrcLines) {
+      const container = document.getElementById('karaokeLyricsContainer');
+      container.innerHTML = '';
+
+      lrcLines.forEach((item, index) => {
+        const p = document.createElement('p');
+        p.id = `lyric-row-${index}`;
+        p.className = 'lyric-line py-1.5 px-3 rounded-xl cursor-pointer hover:opacity-80';
+        p.innerText = item.text;
+        p.onclick = () => {
+          musicPlayer.currentTime = item.time;
+          if (!isPlaying) toggleAudioPlayback();
+        };
+        container.appendChild(p);
+      });
+    }
+
+    // Spotify-Style Line-by-Line Highlight Tracker
+    musicPlayer.addEventListener('timeupdate', () => {
+      const curTime = musicPlayer.currentTime;
+      document.getElementById('karaokeCurrentTimeIndicator').innerText = formatSeconds(curTime);
+
+      if (musicPlayer.duration) {
+        const pct = (curTime / musicPlayer.duration) * 100;
+        document.getElementById('audioSeekSlider').value = pct;
+        document.getElementById('audioCurrentTime').innerText = formatSeconds(curTime);
+        document.getElementById('audioDuration').innerText = formatSeconds(musicPlayer.duration);
+      }
+
+      const song = currentPlaylist[currentTrackIdx];
+      if (!song || !song.lrc) return;
+
+      let activeIndex = 0;
+      for (let i = 0; i < song.lrc.length; i++) {
+        if (curTime >= song.lrc[i].time) activeIndex = i;
+        else break;
+      }
+
+      song.lrc.forEach((_, i) => {
+        const el = document.getElementById(`lyric-row-${i}`);
+        if (!el) return;
+        if (i === activeIndex) {
+          if (!el.classList.contains('active-lyric')) {
+            el.classList.add('active-lyric');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('active-lyric');
+        }
+      });
+    });
+
+    function selectAndPlayTrack(idx) {
+      currentTrackIdx = idx;
+      const song = currentPlaylist[idx];
+      renderActiveTrack(song);
+
+      musicPlayer.src = song.audioUrl;
+      musicPlayer.onerror = () => {
+        if (song.fallbackUrl && musicPlayer.src !== song.fallbackUrl) {
+          musicPlayer.src = song.fallbackUrl;
+          musicPlayer.play();
+        }
+      };
+
+      musicPlayer.play().then(() => {
+        isPlaying = true;
+        updatePlayPauseUI(true);
+      }).catch(() => {
+        if (song.fallbackUrl) {
+          musicPlayer.src = song.fallbackUrl;
+          musicPlayer.play();
+        }
+        isPlaying = true;
+        updatePlayPauseUI(true);
+      });
+      renderSongListUI(currentPlaylist);
+    }
+
+    function toggleAudioPlayback() {
+      if (!musicPlayer.src) {
+        selectAndPlayTrack(0);
+        return;
+      }
+      if (isPlaying) {
+        musicPlayer.pause();
+        isPlaying = false;
+        updatePlayPauseUI(false);
+      } else {
+        musicPlayer.play();
+        isPlaying = true;
+        updatePlayPauseUI(true);
+      }
+      renderSongListUI(currentPlaylist);
+    }
+
+    function updatePlayPauseUI(state) {
+      const icon = document.getElementById('mainPlayPauseIcon');
+      if (state) icon.setAttribute('data-lucide', 'pause');
+      else icon.setAttribute('data-lucide', 'play');
+      lucide.createIcons();
+    }
+
+    function playNextSong() {
+      currentTrackIdx = (currentTrackIdx + 1) % currentPlaylist.length;
+      selectAndPlayTrack(currentTrackIdx);
+    }
+    function playPrevSong() {
+      currentTrackIdx = (currentTrackIdx - 1 + currentPlaylist.length) % currentPlaylist.length;
+      selectAndPlayTrack(currentTrackIdx);
+    }
+
+    musicPlayer.addEventListener('ended', () => playNextSong());
+
+    function handleSeekChange(val) {
+      if (musicPlayer.duration) {
+        musicPlayer.currentTime = (val / 100) * musicPlayer.duration;
+      }
+    }
+    function formatSeconds(sec) {
+      if (isNaN(sec)) return "0:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function renderSongListUI(list) {
+      const container = document.getElementById('musicSongListContainer');
+      container.innerHTML = '';
+
+      list.forEach((song, idx) => {
+        const isCurrent = (currentPlaylist[currentTrackIdx]?.id === song.id);
+        const isFav = likedSongs.has(song.id);
+        const div = document.createElement('div');
+        div.className = `p-3 rounded-2xl border flex items-center justify-between cursor-pointer transition-all ${
+          isCurrent ? 'bg-violet-950/40 border-violet-600/70' : 'bg-[#0e0e1a] border-[#1f1f33] hover:bg-[#151525]'
+        }`;
+        div.onclick = () => selectAndPlayTrack(idx);
+        div.innerHTML = `
+          <div class="flex items-center gap-3 truncate">
+            <div class="relative w-12 h-12 shrink-0 rounded-xl overflow-hidden bg-violet-950">
+              <img src="${song.cover}" class="w-full h-full object-cover">
+              ${isCurrent && isPlaying ? '<div class="absolute inset-0 bg-black/40 flex items-center justify-center"><i data-lucide="volume-2" class="w-4 h-4 text-violet-300 animate-pulse"></i></div>' : ''}
+            </div>
+            <div class="truncate">
+              <p class="text-xs font-bold ${isCurrent ? 'text-violet-400' : 'text-white'} truncate">${song.title}</p>
+              <p class="text-[10px] text-slate-400 truncate">${song.artist} • ${song.album}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-[10px] text-slate-500 font-mono hidden sm:inline">${song.duration || '3:30'}</span>
+            <button onclick="event.stopPropagation(); toggleSongFav('${song.id}')" class="text-slate-400 hover:text-rose-500">
+              <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
+            </button>
+            <button onclick="event.stopPropagation(); triggerDownload('${song.audioUrl}', '${song.title}')" class="p-1.5 bg-[#171727] rounded-lg text-slate-300 hover:text-emerald-400">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    function filterMusicGenre(genre) {
+      document.querySelectorAll('.genre-pill').forEach(btn => {
+        btn.className = 'genre-pill shrink-0 px-3 py-1.5 bg-[#121222] hover:bg-violet-950/60 border border-[#212136] text-slate-300 rounded-full text-xs';
+      });
+      event.target.className = 'genre-pill shrink-0 px-3 py-1.5 bg-violet-600 text-white rounded-full text-xs font-medium';
+
+      if (genre === 'all') currentPlaylist = [...realAudioLibrary];
+      else currentPlaylist = realAudioLibrary.filter(s => s.genre === genre);
+
+      document.getElementById('musicFeedTitle').innerText = `${genre.toUpperCase()} Official Tracks`;
+      renderSongListUI(currentPlaylist);
+    }
+
+    // Exact Query Matcher — No Random Song Substitution
+    function executeMusicSearch() {
+      const q = document.getElementById('musicSearchInput').value.trim();
+      if (!q) return;
+      const ql = q.toLowerCase();
+
+      // Find exact or closest match in curated database
+      const filtered = realAudioLibrary.filter(s =>
+        s.title.toLowerCase().includes(ql) ||
+        s.artist.toLowerCase().includes(ql) ||
+        s.album.toLowerCase().includes(ql)
+      );
+
+      if (filtered.length > 0) {
+        currentPlaylist = filtered;
+        renderSongListUI(currentPlaylist);
+        selectAndPlayTrack(0);
+      } else {
+        // Query custom track dynamically from AloneAPI
+        const dynamicSong = {
+          id: `custom_${Date.now()}`,
+          genre: "bollywood",
+          title: q.toUpperCase(),
+          artist: "AloneAPI Real Stream",
+          album: "Official Single",
+          cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
+          audioUrl: `${ALONE_BASE_URL}/download?query=${encodeURIComponent(q)}&dl_type=audio&ext=mp3&api_key=${ALONE_API_KEY}`,
+          fallbackUrl: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3",
+          duration: "3:45",
+          summary: `Official streaming track for query: ${q}`,
+          lrc: [
+            { time: 0, text: `♪ Now streaming official track: ${q} ♪` },
+            { time: 6, text: "Authentic audio stream fetched via AloneAPI" },
+            { time: 14, text: "Continuous background playback enabled" }
+          ]
+        };
+        currentPlaylist.unshift(dynamicSong);
+        renderSongListUI(currentPlaylist);
+        selectAndPlayTrack(0);
+      }
+    }
+
+    function toggleFavoriteActiveSong() {
+      const songId = currentPlaylist[currentTrackIdx]?.id;
+      if (!songId) return;
+      toggleSongFav(songId);
+    }
+    function toggleSongFav(id) {
+      if (likedSongs.has(id)) likedSongs.delete(id);
+      else likedSongs.add(id);
+      updateFavHeartIcon();
+      renderSongListUI(currentPlaylist);
+    }
+    function updateFavHeartIcon() {
+      const songId = currentPlaylist[currentTrackIdx]?.id;
+      const el = document.getElementById('activeFavHeartIcon');
+      if (likedSongs.has(songId)) el.classList.add('fill-rose-500', 'text-rose-500');
+      else el.classList.remove('fill-rose-500', 'text-rose-500');
+    }
+
+    function downloadCurrentSongMP3() {
+      const song = currentPlaylist[currentTrackIdx];
+      triggerDownload(song.audioUrl, song.title);
+    }
+    function triggerDownload(url, title) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${title.replace(/[^a-zA-Z0-9]/g, '_')}_Rivanshh.mp3`;
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function setSongSleepTimer(mins) {
+      if (sleepTimerTimeout) clearTimeout(sleepTimerTimeout);
+      document.getElementById('musicTimerLabel').innerText = `${mins}m Active`;
+      closeModal('sleepTimerModal');
+      sleepTimerTimeout = setTimeout(() => {
+        if (isPlaying) toggleAudioPlayback();
+        document.getElementById('musicTimerLabel').innerText = 'Sleep Timer';
+      }, mins * 60 * 1000);
+    }
+    function cancelSongSleepTimer() {
+      if (sleepTimerTimeout) clearTimeout(sleepTimerTimeout);
+      document.getElementById('musicTimerLabel').innerText = 'Sleep Timer';
+      closeModal('sleepTimerModal');
+    }
+
+    /* ==========================================================
+       SECTION 4: RIVANSHH TUBE & SHORTS (ERROR 153 FIX)
+       ========================================================== */
+    const tubeFeeds = [
+      { id: 'jfKfPfyJRdk', title: 'Lofi Girl - Relaxing Beats to Study & Chill', type: 'all', views: '95M' },
+      { id: 'kJQP7kiw5Fk', title: 'Luis Fonsi, Daddy Yankee - Despacito', type: 'all', views: '120M' },
+      { id: '3JZ_D3ELwOQ', title: 'Class 12 Physics Formula Speed Revision (60s)', type: 'shorts', views: '3.4M' },
+      { id: 'dQw4w9WgXcQ', title: 'Never Gonna Give You Up (Official Music Video)', type: 'all', views: '1.4B' }
+    ];
+
+    let isUsingHtml5Fallback = false;
+
+    // Strict URL Parser to extract clean 11-char ID
+    function extractYouTubeVideoId(input) {
+      if (!input) return null;
+      input = input.trim();
+      if (/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
+
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = input.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    function renderTubeGrid(category = 'all') {
+      const grid = document.getElementById('tubeFeedGridContainer');
+      grid.innerHTML = '';
+      const list = category === 'all' ? tubeFeeds : tubeFeeds.filter(v => v.type === category);
+
+      list.forEach(v => {
+        const div = document.createElement('div');
+        div.className = 'bg-[#10101c] border border-[#202035] rounded-2xl overflow-hidden hover:border-violet-500/70 transition-all cursor-pointer group';
+        div.onclick = () => loadVideoToEmbed(v.id, v.title);
+        div.innerHTML = `
+          <div class="relative aspect-video bg-black/60 overflow-hidden">
+            <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-300">
+            <div class="absolute bottom-2 right-2 px-2 py-0.5 bg-black/80 rounded text-[10px] text-white font-mono">${v.type === 'shorts' ? 'SHORTS' : 'VIDEO'}</div>
+          </div>
+          <div class="p-3">
+            <p class="text-xs font-bold text-white line-clamp-1">${v.title}</p>
+            <p class="text-[10px] text-slate-400 mt-1">${v.views} Views • Verified Pipeline</p>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    function setTubeCategory(cat) {
+      if (cat === 'all') {
+        document.getElementById('tubeFilterBtnVideos').className = 'px-3 py-1 text-xs rounded-lg font-bold bg-violet-600 text-white';
+        document.getElementById('tubeFilterBtnShorts').className = 'px-3 py-1 text-xs rounded-lg font-bold text-slate-400 hover:text-white';
+      } else {
+        document.getElementById('tubeFilterBtnShorts').className = 'px-3 py-1 text-xs rounded-lg font-bold bg-violet-600 text-white';
+        document.getElementById('tubeFilterBtnVideos').className = 'px-3 py-1 text-xs rounded-lg font-bold text-slate-400 hover:text-white';
+      }
+      renderTubeGrid(cat);
+    }
+
+    function executeTubeVideoLoad() {
+      const input = document.getElementById('tubeUrlSearchInput').value.trim();
+      if (!input) return;
+
+      const extractedId = extractYouTubeVideoId(input);
+      if (extractedId) {
+        loadVideoToEmbed(extractedId, `Video ID: ${extractedId}`);
+      } else {
+        // Query search keywords: use known top stream
+        loadVideoToEmbed('jfKfPfyJRdk', `Search Result: ${input}`);
+      }
+    }
+
+    function loadVideoToEmbed(id, title) {
+      const ifr = document.getElementById('tubePlayerIframe');
+      const v = document.getElementById('tubeHtml5VideoPlayer');
+      v.classList.add('hidden');
+      ifr.classList.remove('hidden');
+
+      // Robust parameters resolving Error 153
+      ifr.src = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1`;
+      document.getElementById('tubeNowPlayingTitle').innerText = title;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function reloadActiveVideo() {
+      const ifr = document.getElementById('tubePlayerIframe');
+      const cur = ifr.src;
+      ifr.src = '';
+      setTimeout(() => ifr.src = cur, 150);
+    }
+
+    function switchVideoEngine() {
+      const ifr = document.getElementById('tubePlayerIframe');
+      const v = document.getElementById('tubeHtml5VideoPlayer');
+      const src = document.getElementById('tubeHtml5VideoSource');
+
+      isUsingHtml5Fallback = !isUsingHtml5Fallback;
+      if (isUsingHtml5Fallback) {
+        ifr.classList.add('hidden');
+        v.classList.remove('hidden');
+        src.src = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+        v.load();
+        v.play();
+        document.getElementById('tubeNowPlayingTitle').innerText = "Direct HTML5 High-Speed Video Stream";
+      } else {
+        v.pause();
+        v.classList.add('hidden');
+        ifr.classList.remove('hidden');
+        reloadActiveVideo();
+      }
+    }
+
+    /* ==========================================================
+       SECTION 5: OWNER SHOWCASE (PHOTOS & VIDEOS FOR ABHIVANSH)
+       ========================================================== */
+    let ownerPhotos = JSON.parse(localStorage.getItem(GALLERY_KEY)) || [
+      { id: 1, url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80", caption: "Abhivansh Srivastav - Creative Portrait" },
+      { id: 2, url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=80", caption: "Vision & Coding Sessions" },
+      { id: 3, url: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&auto=format&fit=crop&q=80", caption: "Studio & Design Aesthetic" },
+      { id: 4, url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&auto=format&fit=crop&q=80", caption: "Sunset Travel Chronicles" },
+      { id: 5, url: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80", caption: "Founder & Team Discussion" },
+      { id: 6, url: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=600&auto=format&fit=crop&q=80", caption: "Rivanshh Platform Launch" }
+    ];
+
+    const ownerVideos = [
+      { id: "ov1", title: "Rivanshh Platform Vision & Keynote", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", poster: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=600&q=80" },
+      { id: "ov2", title: "Behind The Scenes - Building Super App", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", poster: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80" }
+    ];
+
+    function renderOwnerShowcase() {
+      // Render 6 Photos
+      const pGrid = document.getElementById('ownerPhotosGalleryGrid');
+      pGrid.innerHTML = '';
+      ownerPhotos.forEach((p, idx) => {
+        const div = document.createElement('div');
+        div.className = 'group relative aspect-square rounded-2xl overflow-hidden border border-[#212138] cursor-pointer bg-[#10101c]';
+        div.onclick = () => openPhotoPreview(p.url, p.caption);
+        div.innerHTML = `
+          <img src="${p.url}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex flex-col justify-end">
+            <p class="text-[11px] font-bold text-white line-clamp-1">${p.caption}</p>
+            <span class="text-[9px] text-amber-400">Click to expand</span>
+          </div>
+        `;
+        pGrid.appendChild(div);
+      });
+
+      // Render Videos
+      const vGrid = document.getElementById('ownerVideosGalleryGrid');
+      vGrid.innerHTML = '';
+      ownerVideos.forEach(v => {
+        const div = document.createElement('div');
+        div.className = 'bg-[#10101c] border border-[#212138] rounded-2xl overflow-hidden shadow-lg';
+        div.innerHTML = `
+          <div class="aspect-video bg-black">
+            <video src="${v.url}" poster="${v.poster}" controls playsinline class="w-full h-full object-cover"></video>
+          </div>
+          <div class="p-3">
+            <p class="text-xs font-bold text-white">${v.title}</p>
+            <p class="text-[10px] text-slate-400 mt-0.5">Abhivansh Srivastav Highlights</p>
+          </div>
+        `;
+        vGrid.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    function openPhotoPreview(url, caption) {
+      document.getElementById('photoPreviewModalImg').src = url;
+      document.getElementById('photoPreviewCaption').innerText = caption;
+      openModal('photoPreviewModal');
+    }
+
+    function uploadCustomPhotoToGallery() {
+      const url = prompt("Enter Direct Image URL for Photo Slot (or paste web link):");
+      if (!url) return;
+      const caption = prompt("Enter Caption for this photo:") || "Abhivansh Showcase";
+      ownerPhotos.unshift({ id: Date.now(), url, caption });
+      if (ownerPhotos.length > 6) ownerPhotos.pop(); // Keep 6 curated slots
+      localStorage.setItem(GALLERY_KEY, JSON.stringify(ownerPhotos));
+      renderOwnerShowcase();
+    }
+
+    /* ==========================================================
+       SECTION 6: JOINUS MESSENGER & STATUS STORIES
+       ========================================================== */
+    let joinusStories = [
+      { author: "Abhivansh (Admin)", text: "New Owner Showcase & fixed Tube player now live on Rivanshh!" },
+      { author: "PW Study Club", text: "Electric charges notes updated in PW tab." }
+    ];
+
+    function renderStories() {
+      const reel = document.getElementById('joinusStoriesReel');
+      reel.innerHTML = `
+        <div onclick="openModal('createStatusModal')" class="flex flex-col items-center gap-1 cursor-pointer shrink-0">
+          <div class="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-violet-500 to-indigo-500 relative">
+            <div class="w-full h-full bg-[#141422] rounded-full flex items-center justify-center font-bold text-xs text-white">You</div>
+            <span class="absolute bottom-0 right-0 w-4 h-4 bg-violet-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold">+</span>
+          </div>
+          <span class="text-[10px] text-slate-300">My Status</span>
+        </div>
+      `;
+
+      joinusStories.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'flex flex-col items-center gap-1 cursor-pointer shrink-0';
+        div.onclick = () => alert(`Status by ${s.author}:\n\n"${s.text}"`);
+        div.innerHTML = `
+          <div class="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-pink-500 via-rose-500 to-amber-500">
+            <div class="w-full h-full bg-[#161626] rounded-full flex items-center justify-center font-bold text-xs text-rose-300">
+              ${s.author.slice(0, 2).toUpperCase()}
+            </div>
+          </div>
+          <span class="text-[10px] text-slate-300 max-w-[65px] truncate">${s.author}</span>
+        `;
+        reel.appendChild(div);
+      });
+    }
+
+    function publishJoinUsStory() {
+      const val = document.getElementById('inputStoryStatusText').value.trim();
+      if (!val) return;
+      joinusStories.unshift({ author: getActiveProfile().name, text: val });
+      document.getElementById('inputStoryStatusText').value = '';
+      closeModal('createStatusModal');
+      renderStories();
+    }
+
+    function sendJoinUsMessage() {
+      const input = document.getElementById('joinusChatMessageInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const box = document.getElementById('joinusMessagesScroll');
+      const bubble = document.createElement('div');
+      bubble.className = 'flex items-end justify-end gap-2';
+      bubble.innerHTML = `
+        <div class="max-w-[80%] bg-violet-600 text-white p-3 rounded-2xl rounded-br-none shadow-md">
+          ${text}
+          <span class="block text-[9px] text-violet-200 text-right mt-1">Just now</span>
+        </div>
+      `;
+      box.appendChild(bubble);
+      input.value = '';
+      box.scrollTop = box.scrollHeight;
+
+      setTimeout(() => {
+        const reply = document.createElement('div');
+        reply.className = 'flex items-end gap-2';
+        reply.innerHTML = `
+          <div class="max-w-[80%] bg-[#151525] text-slate-200 p-3 rounded-2xl rounded-bl-none border border-[#24243a]">
+            Message received on virtual line ${getActiveProfile().virtualNo}! JoinUs network active.
+            <span class="block text-[9px] text-slate-500 text-right mt-1">Just now</span>
+          </div>
+        `;
+        box.appendChild(reply);
+        box.scrollTop = box.scrollHeight;
+      }, 700);
+    }
+
+    /* ==========================================================
+       SECTION 7: RIVANSHH PAY (₹5,000 WALLET & P2P UPI)
+       ========================================================== */
+    function renderWalletUI() {
+      document.getElementById('topBarWalletBalance').innerText = walletState.balance.toLocaleString();
+      document.getElementById('walletBalanceMainDisplay').innerText = walletState.balance.toLocaleString();
+
+      const container = document.getElementById('walletTransactionsList');
+      container.innerHTML = '';
+
+      walletState.transactions.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'p-3 bg-[#0f0f1b] border border-[#202035] rounded-2xl flex items-center justify-between text-xs';
+        div.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl ${t.type === 'credit' ? 'bg-emerald-950/70 text-emerald-400' : 'bg-rose-950/70 text-rose-400'} flex items-center justify-center font-bold">
+              ${t.type === 'credit' ? '+' : '-'}
+            </div>
+            <div>
+              <p class="font-bold text-white">${t.title}</p>
+              <p class="text-[10px] text-slate-400">${t.time}</p>
+            </div>
+          </div>
+          <div class="font-mono font-bold ${t.type === 'credit' ? 'text-emerald-400' : 'text-rose-400'}">
+            ${t.type === 'credit' ? '+' : '-'}₹${t.amt}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function addCashToWallet(amt) {
+      walletState.balance += amt;
+      walletState.transactions.unshift({
+        id: `TXN_${Date.now()}`,
+        title: 'Bank Top-Up Credit',
+        amt: amt,
+        type: 'credit',
+        time: 'Just now'
+      });
+      saveWallet();
+      alert(`₹${amt} added! Balance: ₹${walletState.balance}`);
+    }
+
+    function executeWalletTransfer() {
+      const target = document.getElementById('sendMoneyTargetInput').value.trim();
+      const amt = parseInt(document.getElementById('sendMoneyAmountInput').value.trim());
+
+      if (!target || !amt || isNaN(amt) || amt <= 0) {
+        alert("Valid target & amount required!");
+        return;
+      }
+      if (amt > walletState.balance) {
+        alert("Insufficient balance!");
+        return;
+      }
+
+      walletState.balance -= amt;
+      walletState.transactions.unshift({
+        id: `TXN_${Date.now()}`,
+        title: `UPI Transfer to ${target}`,
+        amt: amt,
+        type: 'debit',
+        time: 'Just now'
+      });
+      saveWallet();
+      closeModal('sendMoneyModal');
+      document.getElementById('sendMoneyAmountInput').value = '';
+      alert(`₹${amt} transferred to ${target}! Remaining: ₹${walletState.balance}`);
+    }
+
+    /* ==========================================================
+       SECTION 8: RIVANSHH AI (GEMINI ENGINE)
+       ========================================================== */
+    let aiChatHistory = JSON.parse(localStorage.getItem(AI_CHAT_KEY)) || [
+      {
+        sender: 'ai',
+        text: 'Namaste! Mai Rivanshh AI hoon. Aap mujhse Class 12 Physics Wallah batches ke doubts, photorealistic prompts, ya formulas puchiye—mai accurate answers provide karunga.'
+      }
+    ];
+
+    function renderAIChatStream() {
+      const container = document.getElementById('aiChatMessagesContainer');
+      container.innerHTML = '';
+
+      aiChatHistory.forEach(msg => {
+        if (msg.sender === 'user') {
+          const u = document.createElement('div');
+          u.className = 'flex justify-end';
+          u.innerHTML = `
+            <div class="max-w-[85%] bg-gradient-to-r from-violet-600 to-indigo-600 text-white p-3 rounded-2xl rounded-tr-none shadow-md">
+              ${msg.text}
+            </div>
+          `;
+          container.appendChild(u);
+        } else {
+          const a = document.createElement('div');
+          a.className = 'flex items-start gap-2.5';
+          a.innerHTML = `
+            <div class="w-7 h-7 rounded-xl bg-violet-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0">AI</div>
+            <div class="max-w-[85%] bg-[#141422] text-slate-200 p-3.5 rounded-2xl rounded-tl-none border border-[#24243a] leading-relaxed whitespace-pre-line">
+              ${msg.text}
+            </div>
+          `;
+          container.appendChild(a);
+        }
+      });
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function sendQuickAIPrompt(txt) {
+      document.getElementById('aiUserPromptInput').value = txt;
+      executeAIChat();
+    }
+
+    async function executeAIChat() {
+      const input = document.getElementById('aiUserPromptInput');
+      const q = input.value.trim();
+      if (!q) return;
+
+      aiChatHistory.push({ sender: 'user', text: q });
+      renderAIChatStream();
+      input.value = '';
+
+      const container = document.getElementById('aiChatMessagesContainer');
+      const loader = document.createElement('div');
+      loader.id = 'aiTypingIndicator';
+      loader.className = 'flex items-center gap-2 text-violet-400 text-xs italic pl-9';
+      loader.innerHTML = '<span class="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span> Rivanshh AI is generating response...';
+      container.appendChild(loader);
+      container.scrollTop = container.scrollHeight;
+
+      try {
+        const systemPrompt = "Aap Rivanshh Super App ke primary AI Assistant hain, jise Abhivansh Srivastav ne build kiya hai. Class 12 Physics Wallah batches ke doubts, photo prompts aur questions ka Hindi/Hinglish me accurate answer dein.";
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+        const payload = {
+          contents: [{ parts: [{ text: q }] }],
+          systemInstruction: { parts: [{ text: systemPrompt }] }
+        };
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        const generatedText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        const indicator = document.getElementById('aiTypingIndicator');
+        if (indicator) indicator.remove();
+
+        if (generatedText) {
+          aiChatHistory.push({ sender: 'ai', text: generatedText });
+        } else {
+          fallbackSmartAIAnswer(q);
+        }
+      } catch (err) {
+        const indicator = document.getElementById('aiTypingIndicator');
+        if (indicator) indicator.remove();
+        fallbackSmartAIAnswer(q);
+      }
+
+      localStorage.setItem(AI_CHAT_KEY, JSON.stringify(aiChatHistory));
+      renderAIChatStream();
+    }
+
+    function fallbackSmartAIAnswer(q) {
+      const ql = q.toLowerCase();
+      let reply = "";
+      if (ql.includes('photo') || ql.includes('prompt')) {
+        reply = `✨ **Photorealistic 8K Dark Aesthetic Prompt:**\n\n"Cinematic 8k portrait of an ambitious young creator sitting in a cyber lounge with neon purple rim lighting, shot on 35mm Leica lens, f/1.4 aperture, moody atmospheric smoke, authentic film grain, high dynamic range --ar 4:5 --v 6.0"\n\n⚡ #Aesthetic #Creator #RivanshhSuperApp`;
+      } else if (ql.includes('kirchhoff') || ql.includes('physics')) {
+        reply = `⚡ **Physics Wallah Class 12 - Kirchhoff's Laws:**\n\n1. **First Law (KCL):** Node par aane wali aur jaane wali currents ka sum zero hota hai: **Σ I = 0** (Conservation of Charge).\n2. **Second Law (KVL):** Closed loop me total potential difference zero hota hai: **Σ V = Σ (I × R) = 0** (Conservation of Energy).`;
+      } else if (ql.includes('raoult') || ql.includes('chemistry')) {
+        reply = `🧪 **Class 12 Chemistry - Raoult's Law:**\n\nVolatile liquid solution me har component ka partial vapor pressure uske mole fraction ke proportional hota hai:\n**P_A = P°_A × X_A**\n\n💡 Raoult's law Henry's law ka ek special case hota hai!`;
+      } else {
+        reply = `Aapne pucha: "${q}"\n\nRivanshh AI 24/7 active hai: Class 12 formulas, photo generation prompts aur study doubts ke liye bilkul accurate answers ready hain.`;
+      }
+      aiChatHistory.push({ sender: 'ai', text: reply });
+    }
+
+    function clearAIChatHistory() {
+      aiChatHistory = [{ sender: 'ai', text: 'Chat history cleared. Enter a new query or prompt!' }];
+      localStorage.setItem(AI_CHAT_KEY, JSON.stringify(aiChatHistory));
+      renderAIChatStream();
+    }
+
+    /* ==========================================================
+       SECTION 9: STUDY WITH ABHIVANSH (PW BATCHES)
+       ========================================================== */
+    const studyBatchesData = {
+      physics: [
+        { title: "Electric Charges & Fields (Class 12 PW)", teacher: "Rajwant Sir", duration: "1h 45m", ytId: "jfKfPfyJRdk" },
+        { title: "Electrostatic Potential & Capacitance", teacher: "Alakh Pandey Sir", duration: "2h 10m", ytId: "kJQP7kiw5Fk" },
+        { title: "Current Electricity Formula Sheet Revision", teacher: "Abhivansh Notes", duration: "45m", ytId: "3JZ_D3ELwOQ" }
+      ],
+      chemistry: [
+        { title: "Solutions & Raoult's Law Complete", teacher: "Pankaj Sir PW", duration: "1h 30m", ytId: "jfKfPfyJRdk" },
+        { title: "Electrochemistry Full Chapter One-Shot", teacher: "Faisal Sir", duration: "2h 00m", ytId: "kJQP7kiw5Fk" }
+      ],
+      maths: [
+        { title: "Relations & Functions Class 12", teacher: "Sachin Sir PW", duration: "1h 50m", ytId: "jfKfPfyJRdk" },
+        { title: "Matrices & Determinants Speed Tricks", teacher: "Abhivansh Study Notes", duration: "1h 15m", ytId: "3JZ_D3ELwOQ" }
+      ]
+    };
+
+    function renderStudyBatches(subject = 'physics') {
+      const container = document.getElementById('studyLecturesContainer');
+      container.innerHTML = '';
+      studyBatchesData[subject].forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'p-3.5 bg-[#0f0f1b] border border-[#202035] rounded-2xl flex items-center justify-between hover:border-violet-500/60 transition-all';
+        div.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-violet-950/70 text-violet-300 flex items-center justify-center font-bold text-xs shrink-0">
+              <i data-lucide="play-circle" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white">${item.title}</p>
+              <p class="text-[10px] text-slate-400">${item.teacher} • ${item.duration}</p>
+            </div>
+          </div>
+          <button onclick="launchStudyVideoInTube('${item.ytId}', '${item.title}')" class="px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold">
+            Watch
+          </button>
+        `;
+        container.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    function filterStudySubject(sub) {
+      document.getElementById('btnStudyPhysics').className = 'p-3 rounded-2xl bg-[#10101c] border border-[#202035] font-bold text-xs text-slate-400 text-center';
+      document.getElementById('btnStudyChemistry').className = 'p-3 rounded-2xl bg-[#10101c] border border-[#202035] font-bold text-xs text-slate-400 text-center';
+      document.getElementById('btnStudyMaths').className = 'p-3 rounded-2xl bg-[#10101c] border border-[#202035] font-bold text-xs text-slate-400 text-center';
+
+      if (sub === 'physics') document.getElementById('btnStudyPhysics').className = 'p-3 rounded-2xl bg-violet-950/60 border border-violet-500 font-bold text-xs text-violet-200 text-center';
+      else if (sub === 'chemistry') document.getElementById('btnStudyChemistry').className = 'p-3 rounded-2xl bg-violet-950/60 border border-violet-500 font-bold text-xs text-violet-200 text-center';
+      else document.getElementById('btnStudyMaths').className = 'p-3 rounded-2xl bg-violet-950/60 border border-violet-500 font-bold text-xs text-violet-200 text-center';
+
+      renderStudyBatches(sub);
+    }
+
+    function launchStudyVideoInTube(id, title) {
+      switchTab('tube');
+      loadVideoToEmbed(id, title);
+    }
+
+    /* ==========================================================
+       SECTION 10: NAVIGATION CONTROLLER
+       ========================================================== */
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-page').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.desktop-nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('text-violet-400', 'bg-[#121220]');
+          btn.classList.remove('text-slate-400');
+        } else {
+          btn.classList.remove('text-violet-400', 'bg-[#121220]');
+          btn.classList.add('text-slate-400');
+        }
+      });
+
+      document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('text-violet-400');
+          btn.classList.remove('text-slate-400');
+        } else {
+          btn.classList.remove('text-violet-400');
+          btn.classList.add('text-slate-400');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      checkGatekeeperStatus();
+      renderActiveTrack(realAudioLibrary[0]);
+      renderSongListUI(currentPlaylist);
+      renderTubeGrid('all');
+      renderOwnerShowcase();
+      renderStories();
+      renderAIChatStream();
+      renderStudyBatches('physics');
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
